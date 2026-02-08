@@ -4,26 +4,34 @@
   <meta charset="UTF-8">
   <title>StudyApp</title>
   <link rel="stylesheet" href="style.css">
-  <script defer src="script.js"></script>
 </head>
 <body>
   <div id="app">
 
-    <!-- モード切替用ヘッダー -->
+    <!-- ヘッダー -->
     <header class="app-header">
-      <div class="header-main">
-        <h1>試験勉強サイト</h1>
-        <div class="mode-switch">
-          <button id="normal-mode-btn" class="mode-btn active">通常モード</button>
-          <button id="resume-btn" class="mode-btn">前回から再開</button>
-          <button id="wrong-only-btn" class="mode-btn wrong">不正解のみ</button>
-        </div>
+      <h1>試験勉強サイト</h1>
+
+      <!-- モード切替 -->
+      <div class="mode-switch">
+        <button id="normal-mode-btn" class="mode-btn active">通常</button>
+        <button id="resume-btn" class="mode-btn">前回</button>
+        <button id="wrong-only-btn" class="mode-btn">不正解のみ</button>
+        <button id="shuffle-mode-btn" class="mode-btn">ランダム</button>
       </div>
+
+      <!-- 現在モード -->
       <div id="mode-indicator" class="mode-indicator">現在のモード：通常</div>
+
+      <!-- 上部ナビ -->
+      <div class="nav-buttons top-nav">
+        <button id="prev-btn-top">前の問題</button>
+        <button id="next-btn-top">次の問題</button>
+      </div>
     </header>
 
-    <!-- クイズ本体 -->
-    <main>
+    <!-- メイン -->
+    <main class="main-content">
       <div class="question-header">
         問題 <span id="current-idx">0</span> / <span id="total-idx">0</span>
       </div>
@@ -43,7 +51,8 @@
         <div id="explanation-text"></div>
       </div>
 
-      <div class="nav-buttons">
+      <!-- 下部ナビ -->
+      <div class="nav-buttons bottom-nav">
         <button id="prev-btn">前の問題</button>
         <button id="next-btn">次の問題</button>
       </div>
@@ -56,5 +65,6 @@
     </main>
 
   </div>
+    <script defer src="script.js"></script>
 </body>
 </html>

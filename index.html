@@ -1,11 +1,27 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>試験勉強システム Pro</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+<header class="app-header">
+  <h1>StudyApp</h1>
+
+  <!-- モード切替 -->
+  <div class="mode-switch">
+    <button id="normal-mode-btn" class="mode-btn active">
+      通常モード
+    </button>
+    <button id="resume-btn" class="mode-btn">
+      前回から再開
+    </button>
+    <button id="wrong-only-btn" class="mode-btn wrong">
+      不正解のみ
+    </button>
+  </div>
+
+  <!-- 現在モード表示 -->
+  <div id="mode-indicator" class="mode-indicator">
+    現在のモード：通常
+  </div>
+</header>
+
 <body>
     <div id="app">
         <header>

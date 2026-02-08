@@ -128,3 +128,54 @@ footer {
     justify-content: space-between;
     padding-top: 20px;
 }
+/* =========================
+   モード切替 UI
+   ========================= */
+
+.app-header {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.mode-switch {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.mode-btn {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  background: #f5f5f5;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mode-btn:hover {
+  background: #eaeaea;
+}
+
+.mode-btn.active {
+  background: #4a90e2;
+  color: #fff;
+  border-color: #4a90e2;
+}
+
+.mode-btn.wrong {
+  border-color: #d9534f;
+}
+
+.mode-btn.wrong.active {
+  background: #d9534f;
+  color: #fff;
+}
+
+/* 現在モード表示 */
+.mode-indicator {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: #555;
+}

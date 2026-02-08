@@ -211,22 +211,22 @@
   },
   {
     "question_id": 7,
-    "question_text": "次のプログラムを正しく説明しているものはどれですか。\n1    public class Main {\n2        public static void main(String... args) {\n3               String str = \"Japan\";\n4             StringBuilder sb = new StringBuilder (\"Japanese\") ;\n5                str.replace(\"pan\", \"va\");                                  // (A)\n6           sb.substring(®, 5);                           // (B)\n8             System.out.println(str.equals(sb));\n9         +\n10 }",
+    "question_text": "次のプログラムを正しく説明しているものはどれですか。（1つ選択）\n\n```java\npublic class Main {\n    public static void main(String... args) {\n        String str = \"Japan\";\n        StringBuilder sb = new StringBuilder(\"Japanese\");\n        str.replace(\"pan\", \"va\");         // (A)\n        sb.substring(0, 5);                // (B)\n        sb.replace(2, 8, \"va\");            // (C)\n        System.out.println(str.equals(sb));\n    }\n}\n```",
     "question_image": null,
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
       {
         "label": "A",
-        "text": "Aのメソッドは引数を 3 つ指定する必要があるため、コンパイルエラーが発生する"
+        "text": "A のメソッドは引数を3つ指定する必要があるため、コンパイルエラーが発生する"
       },
       {
         "label": "B",
-        "text": "B のメソッドは引数を 1 つのみ指定して使用するため、コンパイルエラーが発生する"
+        "text": "B のメソッドは引数を1つのみ指定して使用するため、コンパイルエラーが発生する"
       },
       {
         "label": "C",
-        "text": "Cのメソッドは第 2 引数の指定が正しくないため、StringIndexOutOfBoundsException がスローされる"
+        "text": "C のメソッドは第2引数の指定が正しくないため、StringIndexOutOfBoundsException がスローされる"
       },
       {
         "label": "D",

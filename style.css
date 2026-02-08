@@ -135,6 +135,14 @@ h1 {
   cursor: pointer;
 }
 
+/* バリデーションメッセージ */
+#validation-msg {
+  margin-top: 6px;
+  color: #dc2626;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
 /* 不正解時：正解選択肢をハイライト */
 .correct-choice {
   background: #dcfce7;
@@ -142,6 +150,7 @@ h1 {
   padding-left: 6px;
   font-weight: 600;
 }
+
 
 /* =========================
    回答ボタン
@@ -249,3 +258,12 @@ h1 {
   margin-bottom: 6px;
 }
 
+/* 前回から再開ボタン配置 */
+.resume-area {
+  margin-bottom: 6px;
+}
+
+.resume-area .mode-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}

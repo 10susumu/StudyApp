@@ -8,29 +8,29 @@
 <body>
   <div id="app">
 
-    <!-- ヘッダー -->
     <header class="app-header">
       <h1>試験勉強サイト</h1>
 
       <!-- モード切替 -->
       <div class="mode-switch">
         <button id="normal-mode-btn" class="mode-btn active">通常</button>
-        <button id="resume-btn" class="mode-btn">前回</button>
         <button id="wrong-only-btn" class="mode-btn">不正解のみ</button>
         <button id="shuffle-mode-btn" class="mode-btn">ランダム</button>
       </div>
 
-      <!-- 現在モード -->
+      <!-- ★ 前回から再開（新配置） -->
+      <div class="resume-area">
+        <button id="resume-btn" class="mode-btn">前回から再開</button>
+      </div>
+
       <div id="mode-indicator" class="mode-indicator">現在のモード：通常</div>
 
-      <!-- 上部ナビ -->
       <div class="nav-buttons top-nav">
         <button id="prev-btn-top">前の問題</button>
         <button id="next-btn-top">次の問題</button>
       </div>
     </header>
 
-    <!-- メイン -->
     <main class="main-content">
       <div class="question-header">
         問題 <span id="current-idx">0</span> / <span id="total-idx">0</span>
@@ -51,7 +51,6 @@
         <div id="explanation-text"></div>
       </div>
 
-      <!-- 下部ナビ -->
       <div class="nav-buttons bottom-nav">
         <button id="prev-btn">前の問題</button>
         <button id="next-btn">次の問題</button>
@@ -63,8 +62,8 @@
         <span class="score-item highlight">得点: <span id="score-percent">0</span>%</span>
       </div>
     </main>
-
   </div>
-    <script defer src="script.js"></script>
+
+  <script defer src="script.js"></script>
 </body>
 </html>

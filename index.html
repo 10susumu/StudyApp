@@ -1,78 +1,90 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>試験勉強システム Pro</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>StudyApp</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+
 </head>
 
 <body>
-    <header class="app-header">
-        <h1>StudyApp</h1>
+  <!-- =========================
+       ヘッダー（モード切替）
+       ========================= -->
+  <header class="app-header">
+    <h1>試験勉強サイト</h1>
 
-        <!-- モード切替 -->
-        <div class="mode-switch">
-            <button id="normal-mode-btn" class="mode-btn active">
-                通常モード
-            </button>
-            <button id="resume-btn" class="mode-btn">
-                前回から再開
-            </button>
-            <button id="wrong-only-btn" class="mode-btn wrong">
-                不正解のみ
-            </button>
-        </div>
-
-        <!-- 現在モード表示 -->
-        <div id="mode-indicator" class="mode-indicator">
-            現在のモード：通常
-        </div>
-    </header>
-    <div id="app">
-        <header>
-            <div class="header-main">
-                <h1>試験勉強サイト</h1>
-                <div id="progress">問題 <span id="current-idx">0</span> / <span id="total-idx">0</span></div>
-            </div>
-            <div id="score-panel">
-                <div class="score-item">正解: <span id="correct-count">0</span></div>
-                <div class="score-item">不正解: <span id="wrong-count">0</span></div>
-                <div class="score-item highlight">得点: <span id="score-percent">0</span>%</div>
-            </div>
-        </header>
-
-        <main id="main-content">
-            <div id="error-message" class="hidden"></div>
-
-            <section class="question-header">
-                <div id="question-text">データをロード中...</div>
-                <div id="image-container"></div>
-            </section>
-
-            <form id="answer-form">
-                <div id="choices-container"></div>
-                <div id="validation-msg" class="hidden">回答を選択してください</div>
-                <button type="submit" id="submit-btn">回答する</button>
-            </form>
-
-            <section id="explanation-container" class="hidden">
-                <div id="result-badge"></div>
-                <div class="explanation-content">
-                    <p><strong>正解:</strong> <span id="correct-answer-text"></span></p>
-                    <hr>
-                    <p id="explanation-text"></p>
-                </div>
-            </section>
-        </main>
-
-        <footer>
-            <button id="prev-btn">前の問題</button>
-            <button id="next-btn">次の問題</button>
-        </footer>
+    <div class="mode-switch">
+      <button id="normal-mode-btn" class="mode-btn active">
+        通常モード
+      </button>
+      <button id="resume-btn" class="mode-btn">
+        前回から再開
+      </button>
+      <button id="wrong-only-btn" class="mode-btn wrong">
+        不正解のみ
+      </button>
     </div>
-    <script src="script.js"></script>
-</body>
 
+    <div id="mode-indicator" class="mode-indicator">
+      現在のモード：通常
+    </div>
+  </header>
+
+  <!-- =========================
+       メインコンテンツ
+       ========================= -->
+  <main class="container">
+    <div id="error-message" class="hidden"></div>
+
+    <div class="question-header">
+      <span>
+        問題 <span id="current-idx">1</span> /
+        <span id="total-idx">0</span>
+      </span>
+    </div>
+
+    <div id="question-text" class="question-text"></div>
+    <div id="image-container"></div>
+
+    <form id="answer-form">
+      <div id="choices-container" class="choices"></div>
+
+      <div id="validation-msg" class="validation hidden">
+        選択してください
+      </div>
+
+      <button type="submit" class="submit-btn">
+        回答する
+      </button>
+    </form>
+
+    <div id="explanation-container" class="hidden">
+      <div id="result-badge"></div>
+      <div>
+        正解：
+        <span id="correct-answer-text"></span>
+      </div>
+      <div id="explanation-text"></div>
+    </div>
+
+    <!-- ナビゲーション -->
+    <div class="nav-buttons">
+      <button id="prev-btn">前の問題</button>
+      <button id="next-btn">次の問題</button>
+    </div>
+
+    <!-- スコア -->
+    <div class="score-board">
+      <span>正解：<span id="correct-count">0</span></span>
+      <span>不正解：<span id="wrong-count">0</span></span>
+      <span>正答率：<span id="score-percent">0</span>%</span>
+    </div>
+  </main>
+    <!-- JS -->
+  <script defer src="script.js"></script>
+</body>
 </html>

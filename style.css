@@ -27,12 +27,36 @@ body {
 
 .app-header {
   margin-bottom: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: nowrap; /* 高さ増加を防ぐ */
 }
 
-h1 {
-  font-size: 1.3rem;
-  margin: 0 0 6px 0;
+/* タイトル余白調整 */
+.app-header h1 {
+  margin: 0;
+  white-space: nowrap;
 }
+
+/* 各ブロック横並び */
+.mode-switch,
+.resume-area,
+.top-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 0; /* 縦余白を消す */
+}
+
+/* モード表示も縦余白削除 */
+.mode-indicator {
+  margin-bottom: 0;
+  white-space: nowrap;
+}
+
 
 /* =========================
    モード切替

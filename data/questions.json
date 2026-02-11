@@ -1168,7 +1168,7 @@
   {
     "question_id": 35,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n1  public class Main {\n2      public static void main(String[] args) {\n3          Item i1 = new Item(100, 2);\n4          Item i2 = new Item(200, 5);\n5          Item i3 = new Item(10, 10);\n6         System.out.print(i1.calc() +\" \") ;\n7         System.out.print(i2.calc(0.5) +\" \") ;\n8         System.out.print(i3.calc(1.1, 2.0) +\" \") ;\n9       }\n10 }\n11 record Item(int price, int amount) {\n12      public int calc () { return price * amount; }\n13      public int calc(double... rate) {\n14        return (int) (Math.floor(price * rate[0]));\n15      }\n16      public long calc(double discount) {\n17         return Math.round(price * discount);\n18      }\n19      public long calc() { return (long)price * amount; }\n20 }",
-    "question_image": null,
+    "question_image": "35.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1234,7 +1234,7 @@
   {
     "question_id": 37,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n3         var r1 = new Resource(1);\n4         var r2 = new Resource(2);\n5             try(r1; r2){\n6               System.out.print(\"try \");\n7             r1 = new Resource(3);\n8         } catch (Exception ex){\n9                       System.out.println(\"catch \");\n10            }\n...\n13 class Resource implements AutoCloseable {\n16     public void close() throws Exception {\n17             System.out.print(\"close\" + id +\" \");\n18         throw new Exception(\"Exception \");\n19        }\n20 }",
-    "question_image": null,
+    "question_image": "37.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1366,7 +1366,7 @@
   {
     "question_id": 41,
     "question_text": "次のプログラム (抜粋) をコンパイル、実行するとどのような結果になりますか。\n2   enum Season {\n3      SPRING, SUMMER, AUTUMN, WINTER\n4   }\n5   public class Main {\n6      public static void main(String[] args) {\n7         Season s1 = Season.AUTUMN;\n8         Season s2 = Season.WINTER;\n9         if (s1.ordinal() > s2.ordinal()) {\n10           System.out.print(\"A \");\n11        }\n12        if (s1.compareTo(s2) < 0) {\n13           System.out.print(\"B \");\n14        }\n15        if (s1.equals(Season.valueOf(\"AUTUMN\"))) {\n16           System.out.print(\"C \");\n17        }\n18     }\n19  }",
-    "question_image": null,
+    "question_image": "41.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1403,7 +1403,7 @@
   {
     "question_id": 42,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n1  public class Main {\n2      public static void main(String[] args) {\n3         int a = 10;\n4         int b = 20;\n5         System.out.println(calc(a, b));\n6      }\n7      static int calc(int a, int b) {\n8         return (a += 5) + (b -= 5);\n9      }\n10 }",
-    "question_image": null,
+    "question_image": "42.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1432,7 +1432,7 @@
   {
     "question_id": 43,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n1  public class Main {\n2      public static void main(String[] args) {\n3         String str = \"Java SE 17\";\n4         int pos = str.indexOf(\"SE\");\n5         System.out.println(str.substring(pos, pos + 5));\n6      }\n7  }",
-    "question_image": null,
+    "question_image": "43.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1457,7 +1457,7 @@
   {
     "question_id": 44,
     "question_text": "次のプログラムを正しく説明しているものはどれですか。\n1  interface Printable {\n2      void print();\n3  }\n4  public class Main {\n5      public static void main(String[] args) {\n6         Printable p = () -> System.out.println(\"Printing...\");\n7         p.print();\n8      }\n9  }",
-    "question_image": null,
+    "question_image": "44.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [

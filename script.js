@@ -26,7 +26,8 @@ function loadState() {
 
 const CONFIG = {
     Q_DATA: './data/questions.json',
-    E_DATA: './data/explanations.json'
+    E_DATA: './data/explanations.json',
+    IMAGE_DATA: './assets/',
 };
 
 let state = {
@@ -191,7 +192,37 @@ function render() {
     }
 
     dom.qNumber.textContent = `問題ID：${q.question_id}`;
-    dom.qText.textContent = q.question_text;
+
+    // ★ 問題画像表示処理
+    if (q.question_image) {
+        const imgPath = CONFIG.IMAGE_DATA + q.question_image;
+
+        dom.imageContainer = document.getElementById('image-container');
+    dom.imageContainer.innerHTML = '';
+
+    const img = document.createElement('img');
+    img.src = imgPath;
+    img.alt = '問題画像';
+    img.className = 'question-img';
+
+    // ★ 画像読み込み失敗時
+    img.onerror = () => {
+        dom.imageContainer.style.display = 'none';
+        dom.qText.style.display = 'block';
+        dom.qText.textContent = q.question_text;
+    };
+
+    dom.qText.style.display = 'none';
+    dom.imageContainer.appendChild(img);
+        dom.imageContainer.style.display = 'block';
+
+    } else {
+        dom.imageContainer = document.getElementById('image-container');
+        dom.imageContainer.innerHTML = '';
+        dom.imageContainer.style.display = 'none';
+        dom.qText.style.display = 'block';
+        dom.qText.textContent = q.question_text;
+    }
 
     q.choices.forEach(c => {
         const label = document.createElement('label');
@@ -204,6 +235,54 @@ function render() {
 
     document.getElementById('current-idx').textContent = state.currentIndex + 1;
     document.getElementById('total-idx').textContent = list.length;
+}
+
+// ========================
+// 回答処理
+// ========================
+dom.form.onsubmit = e => {
+    e.preventDefault();
+
+    const selected = Array.from(new FormData(dom.form).getAll('ans'));
+    if (!selected.length) {
+        dom.validMsg.classList.remove('hidden');
+        return;
+    }
+
+    const q = state.currentList[state.currentIndex];
+    const ex = state.explanations.find(e => e.question_id === q.question_id);
+    const correct = ex.correct_answers.sort();
+    const isCorrect = JSON.stringify(selected.sort()) === JSON.stringify(correct);
+
+    state.results[q.question_id] = isCorrect;
+    saveState();   // ★追加
+
+    document.querySelectorAll('.choice-item').forEach(l => {
+        const v = l.querySelector('input').value;
+        if (!isCorrect && correct.includes(v)) {
+            l.classList.add('correct-highlight');
+        }
+    });
+
+    dom.exp.classList.remove('hidden');
+    dom.exp.className = isCorrect ? 'correct-ui' : 'wrong-ui';
+    document.getElementById('result-badge').textContent = isCorrect ? '✓ 正解' : '× 不正解';
+    document.getElementById('correct-answer-text').textContent = correct.join(', ');
+    document.getElementById('explanation-text').textContent = ex.explanation_text;
+
+    updateScore();
+};
+
+// ========================
+// スコア
+// ========================
+function updateScore() {
+    const v = Object.values(state.results);
+    dom.scoreC.textContent = v.filter(x => x).length;
+    dom.scoreW.textContent = v.filter(x => !x).length;
+    dom.scoreP.textContent = state.questions.length
+        ? Math.round((v.filter(x => x).length / state.questions.length) * 100)
+        : 0;
 }
 
 init();

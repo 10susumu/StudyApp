@@ -2,7 +2,7 @@
   {
     "question_id": 1,
     "question_text": "次のプログラムがあります。\n1 public interface Playable {\n2      // insert code here\n3        void play();\n4 }\n5  class MusicPlayer implements Playable {\n6      public void play() {\n7          System.out.print(\"playing...\" + SPEED + \"x\");\n8         }\n9 }\nコンパイルを成功させるために 2 行目に必要な記述はどれですか。",
-    "question_image": null,
+    "question_image": "1.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -35,7 +35,7 @@
   {
     "question_id": 2,
     "question_text": "次のプログラムは Mainjava というファイルに記述されています。\n1  public class Main {\n2      public static void main(String... args) {\n3          int a = Integer.parseInt(args[0])3\n4          char b = args[1].charAt(Q) >\n5          System.out.println(a + b)3\n6         }\n7 }\n以下の方法で実行するとどのような結果になりますか。",
-    "question_image": null,
+    "question_image": "2.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -72,7 +72,7 @@
   {
     "question_id": 3,
     "question_text": "次の記述のうち、コンパイルエラーが発生するものはどれですか。",
-    "question_image": null,
+    "question_image": "3.jpg",
     "answer_type": "multiple",
     "answer_count": 3,
     "choices": [
@@ -105,7 +105,7 @@
   {
     "question_id": 4,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。（1つ選択）\n\n1 public class Main {\n2     public static void main(String[] args) {\n3         int i = 0;\n4         label:\n5         for ( ; ; ) {                                        // (A)\n6             while (i < 5) {\n7                 i++;\n8                 if (i % 2 == 0) continue label;\n9                 System.out.print(\" i:\" + i);\n10             }\n11             for (int j = 0; ; j += 2) {                                        // (B)\n12                 if (j == 5) break label;\n13                 System.out.print(\" j:\" + j);\n14             }\n15         }\n16     }\n17 }",
-    "question_image": null,
+    "question_image": "4.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -142,7 +142,7 @@
   {
     "question_id": 5,
     "question_text": "次のプログラム (抜粋) を正しく説明しているものはどれですか。\n3         String sl = \"Hello\";\n4         String s2 = new String(\"Hello\") ;\n5         String s3 = s2.intern();\n6         String s4 = sl1.toString();\n7         StringBuilder sb1 = new StringBuilder(s1);",
-    "question_image": null,
+    "question_image": "5.jpg",
     "answer_type": "multiple",
     "answer_count": 2,
     "choices": [
@@ -179,7 +179,7 @@
   {
     "question_id": 6,
     "question_text": "次のプログラム (抜粋) と同等の記述はどれですか。",
-    "question_image": null,
+    "question_image": "6.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -212,7 +212,7 @@
   {
     "question_id": 7,
     "question_text": "次のプログラムを正しく説明しているものはどれですか。（1つ選択）\n\n```java\npublic class Main {\n    public static void main(String... args) {\n        String str = \"Japan\";\n        StringBuilder sb = new StringBuilder(\"Japanese\");\n        str.replace(\"pan\", \"va\");         // (A)\n        sb.substring(0, 5);                // (B)\n        sb.replace(2, 8, \"va\");            // (C)\n        System.out.println(str.equals(sb));\n    }\n}\n```",
-    "question_image": null,
+    "question_image": "7.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -241,7 +241,7 @@
   {
     "question_id": 8,
     "question_text": "次のローカル変数の宣言で、コンパイルエラーが発生しないものはどれですか。",
-    "question_image": null,
+    "question_image": "8.jpg",
     "answer_type": "multiple",
     "answer_count": 2,
     "choices": [
@@ -274,7 +274,7 @@
   {
     "question_id": 9,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n1  public class Main {\n2      public static void main(String... args) {\n3          try {\n4                 method(new MyResource()) 3\n5              + catch (Exception e) {\n6                 System.out.print(\"A\");\n7              +\n8         +\n9         static void method(MyResource r) throws Exception { // (A)\n10           try (r) {                                          // (B)\n11               System.out.print(\"B\")3\n12           +                                                  if (Cy\n13       +\n14  +\n15  class MyResource implements AutoCloseable {\n16      public void close() throws Exception {\n17            System.out.print(\"C\");\n18        +\n19 +",
-    "question_image": null,
+    "question_image": "9.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -311,7 +311,7 @@
   {
     "question_id": 10,
     "question_text": "次のプログラムを正しく説明しているものはどれですか。\n1   class Main {\n2      void main(String args) { new Main(); }\n3      public static void main(String... s) { main(); }",
-    "question_image": null,
+    "question_image": "10.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -344,7 +344,7 @@
   {
     "question_id": 11,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n1  public class Main {\n2      public static void main(String[] args) {\n3        String[] str = {\n4                \"Coffee\", new String(\"Coffee\"), \"\",\n5                  \"Cafe\", new String(\"Ca\").concat(\"fe\")\n6           }\n7          str[2] = str[0].replace(\"of\", \"a\").substring(0, 4);\n8          int count = 0;\n9         for (String s : str) {\n10           count += switch (s) {\n11              default -> -2;\n12               case \"Coffee\" -> 2;\n13              case \"Cafe\" -> 1;\n14               お\n15           +\n16         System.out.println(\"count:\" + count);\n17       }\n18 }",
-    "question_image": null,
+    "question_image": "11.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -381,7 +381,7 @@
   {
     "question_id": 12,
     "question_text": "次のプログラムにおいて、AU:GB:JP:US:と出力するために (1) に記述できるものはどれですか。\n2  public class Main {\n3      public static void main(String... args) {\n4          ArrayList<String> code =\n5             new ArrayList<>(List.of(\"AU\", \"GB\", \"JP\", \"US\"))3\n6          show(code) >\n7       +\n8      private static void show( [   (1)   ] list) {\n9         for (String s: list) System.out.pr1nt(s + \":\")3\n16     +\n11 }",
-    "question_image": null,
+    "question_image": "12.jpg",
     "answer_type": "multiple",
     "answer_count": 2,
     "choices": [
@@ -418,7 +418,7 @@
   {
     "question_id": 13,
     "question_text": "次のプログラムは Mainjava というファイルに記述されています。このプログラムを正しく説明しているものはどれですか。\n1   class Test {\n2      public static void main() {\n3            System.out.print(\"1 \");\n4            Main.main(\"2 \"うぅ\n5       +\n6 }\n7  public class Main {\n8      public static void main(String... args) {\n9            System.out.print(\"3 \")3\n16       +\n11  +",
-    "question_image": null,
+    "question_image": "13.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -451,7 +451,7 @@
   {
     "question_id": 14,
     "question_text": "次のプログラム (抜粋) があります。\n3          var x = new StringBuilder (\"Java\");\n4          var y = new String(\"Java\") ;\n5          int 4 = 03\n6           i = x.equals(y) ? 1 :y.equats(x) ? 2 : 33\n6 行目の処理と同じ結果となるものはどれですか。",
-    "question_image": null,
+    "question_image": "14.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -484,7 +484,7 @@
   {
     "question_id": 15,
     "question_text": "次のプログラムにおいて、Super!Sub#print0を出力するために必要な記述はどれですか。",
-    "question_image": null,
+    "question_image": "15.jpg",
     "answer_type": "multiple",
     "answer_count": 2,
     "choices": [
@@ -521,7 +521,7 @@
   {
     "question_id": 16,
     "question_text": "次のプログラム (抜粋) をコンパイル、実行するとどのような結果になりますか。\n2   class Country {\n3      private static String[] countries = {\"GB\", \"India\", \"USA\", \"Canada\", \"JP\"};\n5      String toShortName(String country) {\n6                return country.substring(0, 2).toUpperCase();\nT        +\n8      public static void main(String[] args) {\n9              for (int i = 0; i < countries.length; i++) {              // (A)\n10           String country = countries[i];\n11                if(country.length() == 2) continue;\n12           countries[i] = new Country().toShortName(country); // (B)\n13            }\n14                System.out.println (Arrays. toString (countries) ) 3\n15       }",
-    "question_image": null,
+    "question_image": "16.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -558,7 +558,7 @@
   {
     "question_id": 17,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n1  public class Main {\n2      public static void main(String... args) {\n3    int a = 10, b = 20, c = 30;\n4    int ansl=atb+t+c/a;\n5          float x = 1.1F, y = 1.7F, z = 2.1F;\n6          float ans2 = x = y = zi\n7         System.out.println(\"ansl:\" + ansl + \", ans2:\" + ans2);\n8      +\n9 }",
-    "question_image": null,
+    "question_image": "17.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -591,7 +591,7 @@
   {
     "question_id": 18,
     "question_text": "次のプログラムにおいて、bdg を出力するために 8 行目に必要な記述はどれですか。\n1  public class Main {\n2      public static void main(String... args) {\n3          char「] consonants = {'b', 'c', 'd', 'f', 'g't5\n4                  Disp.print(consonants) >\n5      +\n6 }\n7   class Disp {\n8    // insert code here\n9 }",
-    "question_image": null,
+    "question_image": "18.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -620,7 +620,7 @@
   {
     "question_id": 19,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n1  public class Main {\n2          public static void main(String[] args) {\n3               StringBuilder s1 = new StringBuilder (\"Hey\") .append(\"!!\")3\n5               String s2 = \"Hello\";\n6          Main m = new Ma1n()ぅ\n7                 System.out.print(m.method(sl.toString(), s2))3\n9          System.out.print(m.method(s2, s1) )\n10     +\n11      String method(StringBuilder sb, String s) {     // (A)\n12         String tmp = sb.toString();\n13         return toShortLetter(tmp.startswith(\"H\") && s.startswith(\"H\")) 3\n15     +\n16      String method(String s, StringBuilder sb) {      // (B)\n17         String tmp = sb.toString();\n18         return toShortLetter(s.contains(\"!\") && tmp.contains(\"!\"))3\n20     +\n21      String method(Object s1, Object s2) {           // (C)\n22            return toShortLetter(s1.toString().length() == s2.toStr1ng() . Length() )\n24     +\n25      private String toShortLetter(bootean b) {       // (D)\n26        return b 2 \"T\" : \"FMS\n27      }\n28 }",
-    "question_image": null,
+    "question_image": "19.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -657,7 +657,7 @@
   {
     "question_id": 20,
     "question_text": "次のプログラム (抜粋) をコンパイル、実行するとどのような結果になりますか。\n2  public class Main {\n3      public static void main(String... args) {\n4         double[] oldPrice = {7.95, 10.0, 25.99};\n5          double[] newPrice = new double[oldPrice. length] ;\n6        for (int i = 0; i < oldPrice.length; i++) {\n7           if (oldPrice[i] < 10) newPrice[i] = oldPrice[i] += 23\n8           else if (oldPrice[i] > 20) newPrice[i] = --oldPrice[i];\n9             else newPrice[i] = ++oldPricelil;\n16         +\n11         System.out.pr1nttn(Arrays.toStr1ng(newPr1ce) ) :\n12      +\n13 }",
-    "question_image": null,
+    "question_image": "20.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -690,7 +690,7 @@
   {
     "question_id": 21,
     "question_text": "次のプログラムがあります。\n\n1  public class Main {\n2      public static void main(String[] args) {\n3                 methodA(\"Ex\")\n4      }\n5      static void methodA(String s) {\n6       if(s.length() < 5) throw new RuntimeException(); // (A)\n7          methodB(s);\n8      }\n9      static void methodB(String s) {\n10          if (s.endsWith(\"Z\"))\n11             throw new Exception(\"Incorrect letter\");     // (B)\n12      }\n13  }\n\nコンパイルを成功させるために必要な変更はどれですか。",
-    "question_image": null,
+    "question_image": "21.jpg",
     "answer_type": "multiple",
     "answer_count": 3,
     "choices": [
@@ -723,7 +723,7 @@
   {
     "question_id": 22,
     "question_text": "次の記述のうちコンパイルエラーが発生するものはどれですか。",
-    "question_image": null,
+    "question_image": "22.jpg",
     "answer_type": "multiple",
     "answer_count": 2,
     "choices": [
@@ -760,7 +760,7 @@
   {
     "question_id": 23,
     "question_text": "次のプログラムがあります。\n1  public sealed interface Item permits Food, Drink {}\n2  // insert code here\n\nコンパイルを成功させるために 2 行目以降に必要な記述はどれですか。",
-    "question_image": null,
+    "question_image": "23.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -789,7 +789,7 @@
   {
     "question_id": 24,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n1    public class Main {\n2        public static void main(String... args) {\n3               var list = new String[][]{{\"Amy\", \"Clara\"}, {\"Lewis\", null}};\n4           for (var i = 0; i < list.length ; i++) {\n5            for (var j = 0; j < 2; j++) {\n6                   System.out.print(list[i][j] + \":\");\n7            }\n8           }\n9        }\n10   }",
-    "question_image": null,
+    "question_image": "24.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -822,7 +822,7 @@
   {
     "question_id": 25,
     "question_text": "次のプログラムを正しく説明しているものはどれですか。\n1  sealed class Super permits Sub {\n2      private String name = \"SUPER \";\n3      final String getName() { return name; }\n4      private void reset() { this.name = \"\"; }\n5      public String toString() { return \"Super \" + name; }\n6  }\n7  non-sealed class Sub extends Super {\n8      private String name = \"SUB \";\n9      public String getName() { return name; }\n10     public void reset(){ this.name = \"\"; };\n11     public String toString() { return \"Sub \" + name; }\n12  }\n13  class Main {\n14     public static void main(String[] args) {\n15        Super s = new Sub();\n16        System.out.print(s);\n17        ((Sub)s).reset();\n18        System.out.print(s.getName());\n19     }\n20  }",
-    "question_image": null,
+    "question_image": "25.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -863,7 +863,7 @@
   {
     "question_id": 26,
     "question_text": "次のプログラム (抜粋) をコンパイル、実行するとどのような結果になりますか。\n4        Integer[] number = {0b011, 5, 10, 0x00C};\n5        for (var i = 0; i < number.length; i++) {\n6           number[i] = Calc.operate(number[i]);      // (A)\n7        }\n8        System.out.println(Arrays.toString(number));\n...\n12     public static int operate(Integer obj)           // (B)\n13                  throws RuntimeException {\n14        return switch (obj) {\n15           case 3, 4, 5 -> ++obj;\n16           default -> --obj;\n17        };\n18     }",
-    "question_image": null,
+    "question_image": "26.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -896,7 +896,7 @@
   {
     "question_id": 27,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n1  public class MyClass {\n2      static String id = \"1:\";\n3      String name = \"Duke \";\n4      public static void main(String[] args) {\n5                MyClass o1 = new MyClass();\n6                MyClass o2 = new MyClass();\n7           o2.id = \"2:\";\n8                o2.name = \"James \";\n9                System.out.print(o1.id + o1.name + o2.id + o2.name);\n10               o1 = o2;\n11          o1.id = \"3:\";\n12               o1.name = \"Scott \";\n13                   System.out.println(o1.id + o1.name + MyClass.id + o2.name);\n14        }\n15 }",
-    "question_image": null,
+    "question_image": "27.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -925,7 +925,7 @@
   {
     "question_id": 28,
     "question_text": "次のプログラムを正しく説明しているものはどれですか。\n1    public class Main {\n2        public static void main(String[] args) {\n3                try (var r = new SafeResource()){\n4                    r.load();\n5                  System.out.print(\"try: \");\n6                }\n7           }\n8    }\n9    class SafeResource implements AutoCloseable {\n10       public void load() throws RuntimeException {\n11             System.out.print(\"load: \");\n12       }\n13       public void close() throws RuntimeException {\n14        System.out.println(\"close: \");\n15       }\n16  }",
-    "question_image": null,
+    "question_image": "28.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -962,7 +962,7 @@
   {
     "question_id": 29,
     "question_text": "次のプログラムを正しく説明しているものはどれですか。\n1  public class Main {\n2      public static void main(String[] args) {\n3        Object[] obj = {new Item(),\n4              new Clothes(), \"TBD \", new Object()}; // (A)\n5        for (Object o : obj) { method(o); }\n6      }\n7      static void method(Object obj) {\n8        if (obj instanceof Clothes c) {\n9         System.out.print(c.name) ;\n10        } else if (obj instanceof Item i) {\n11            System.out.print(i.name) ;\n12        } else if (! (obj instanceof String s)) {\n13           System.out.print(\"N/A \");\n14        } else {\n15        System.out.print(s) ;\n...\n19  class Item { String name = \"Item \"; }\n20  class Clothes extends Item { String name = \"Clothes \"; }",
-    "question_image": null,
+    "question_image": "29.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -999,7 +999,7 @@
   {
     "question_id": 30,
     "question_text": "次のプログラムがあります。\n1  public class Main {\n2      public static void main(String[] args) {\n3              String text = \" Lime Lemon \";\n4         text = text.trim();\n5              if( (1) )\n6                 System.out.println(\"Found!\") ;\n7        }\n8  }\nFound!を出力するために (1) に記述できるものはどれですか。",
-    "question_image": null,
+    "question_image": "30.jpg",
     "answer_type": "multiple",
     "answer_count": 2,
     "choices": [
@@ -1032,7 +1032,7 @@
   {
     "question_id": 31,
     "question_text": "次のプログラム (抜粋) をコンパイル、実行するとどのような結果になりますか。\n4         ArrayList<String> list = new ArrayList<>();\n5         list.add(\"Duke \");\n6         list.add(\"James \");\n7         list.add(null) ;                          // (A)\n8         var value1 = list.add(0, \"Carol \");         // (B)\n9         var value2 = list.set(1, \"Amy \");\n10        var value3 = list.get(2);\n11        var value4 = list.remove(3)               // (C)\n12       for (String s : list) System.out.print(s)",
-    "question_image": null,
+    "question_image": "31.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1065,7 +1065,7 @@
   {
     "question_id": 32,
     "question_text": "次のプログラムがあります。\n1  sealed interface I permits A, Base {}\n2  public interface J {}\n3  non-sealed class A implements I {}\n4  final class B {}\n5  // insert code here\n\nコンパイルを成功させるために 5 行目に記述できるものはどれですか。",
-    "question_image": null,
+    "question_image": "32.jpg",
     "answer_type": "multiple",
     "answer_count": 3,
     "choices": [
@@ -1102,7 +1102,7 @@
   {
     "question_id": 33,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n1  public class Main {\n2      static int i = 0;\n3      public static void main(String... args) {\n4          int[] array = {5, 7, 11, 13, 15};\n5           operate(array) ;\n6        }\n7      private static void operate(int... arr) {\n8          do {\n9                 System.out.print(arr[i]);\n10           } while (arr[i] <= 11  arr[i++] < 11);\n11       }\n12 }",
-    "question_image": null,
+    "question_image": "33.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1139,7 +1139,7 @@
   {
     "question_id": 34,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n1  public class Product {\n2      static int code;\n3      static { code = 100; }\n4      private String name;\n5      public Product(String name) { this.name = name; }\n6      public void setName(String name) { name = name; }\n7      public String toString() { return \"name:\" + name; }\n8      public static void main(String[] args) {\n9          Product p = new Product(\"Duke\") ;\n10                p.setName(\"James\") ;\n11                System.out.println(p) ;\n12       }\n13 }",
-    "question_image": null,
+    "question_image": "34.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1201,7 +1201,7 @@
   {
     "question_id": 36,
     "question_text": "次のプログラムがあります。\n1  class Main {\n2      public static void main(String... args) {\n3         Book book = new Book(100, \"william\", 7.99);\n4                 System.out.println (book) ;\n5       }\n6  }\n以下の実行結果となるレコードの宣言はどれですか。\n実行結果：Book[id=100, author=WILLIAM, price=7.99]",
-    "question_image": null,
+    "question_image": "36.jpg",
     "answer_type": "multiple",
     "answer_count": 2,
     "choices": [
@@ -1263,7 +1263,7 @@
   {
     "question_id": 38,
     "question_text": "次のプログラム (抜粋) と同様の処理はどれですか。\nString text = \"Java \\\"17\\\"\" ;",
-    "question_image": null,
+    "question_image": "38.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1296,7 +1296,7 @@
   {
     "question_id": 39,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n1    public class Main {\n2         public static void main(String... args) {\n3                try {\n4                    validate(\"Java\") ;                                 // (A)\n5                    validate(17);                                      // (B)\n6                  } catch (RuntimeException e) {\n7                    e.printStackTrace() ;\n8                  }\n9            }\n10        private static void validate(Object obj) {\n11              if (obj instanceof Integer o) {\n12                   System.out.print(\"Integer \") ;\n13                 }\n14              if (!(obj instanceof String s)) {\n15                      throw new RuntimeException(\"Ex \") ;\n16                }\n17              System.out.print(\"String \") ;\n18          }\n19 }",
-    "question_image": null,
+    "question_image": "39.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1333,7 +1333,7 @@
   {
     "question_id": 40,
     "question_text": "次のプログラムがあります。\n1    interface Point {\n2          int basePoint = 10;\n3          static int getBasePoint() { return basePoint; }\n4        int calculate(int x);\n5    }\n6    class Product implements Point {\n7          public int calculate(int x) { return x + basePoint; }\n8    }\n12              System.out.println( [ (1) ] ) ;\n(1) に記述するとコンパイルエラーとなるものはどれですか。",
-    "question_image": null,
+    "question_image": "40.jpg",
     "answer_type": "multiple",
     "answer_count": 2,
     "choices": [
@@ -1482,7 +1482,7 @@
   {
     "question_id": 45,
     "question_text": "次のプログラム (抜粋) をコンパイル、実行するとどのような結果になりますか。\n4         int[] nums = {1, 2, 3, 4, 5};\n5         int total = 0;\n6         for (int i : nums) {\n7            if (i % 2 == 0) continue;\n8            total += i;\n9         }\n10        System.out.println(total);",
-    "question_image": null,
+    "question_image": "45.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1507,7 +1507,7 @@
   {
     "question_id": 46,
     "question_text": "次のプログラム (抜粋) をコンパイル、実行するとどのような結果になりますか。\n2   class Base {\n3      Base() { System.out.print(\"Base \"); }\n4   }\n5   class Sub extends Base {\n6      Sub() { this(\"Sub \"); System.out.print(\"Default \"); }\n7      Sub(String s) { System.out.print(s); }\n8   }\n9   public class Main {\n10     public static void main(String[] args) {\n11        new Sub();\n12     }\n13  }",
-    "question_image": null,
+    "question_image": "46.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1532,7 +1532,7 @@
   {
     "question_id": 47,
     "question_text": "次の記述のうち、正しいものはどれですか。",
-    "question_image": null,
+    "question_image": "47.jpg",
     "answer_type": "multiple",
     "answer_count": 2,
     "choices": [
@@ -1557,7 +1557,7 @@
   {
     "question_id": 48,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n1  public class Main {\n2      public static void main(String[] args) {\n3         String s = null;\n4         try {\n5            System.out.print(s.length());\n6         } catch (NullPointerException e) {\n7            System.out.print(\"NPE \");\n8         } finally {\n9            System.out.print(\"Finally \");\n10        }\n11     }\n12 }",
-    "question_image": null,
+    "question_image": "48.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1582,7 +1582,7 @@
   {
     "question_id": 49,
     "question_text": "次のプログラム (抜粋) をコンパイル、実行するとどのような結果になりますか。\n2   abstract class MyAbstract {\n3      private void x() { System.out.print(\"private \"); }\n4      void x(String s) { System.out.print(\"default \"); }\n5   }\n6   class MyConcrete extends MyAbstract {\n7      public void x() {\n8         super.x(\"test\");\n9         System.out.print(\"concrete \");\n10     }\n11     public static void main(String[] args) {\n12        new MyConcrete().x();\n13     }\n14  }",
-    "question_image": null,
+    "question_image": "49.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1607,7 +1607,7 @@
   {
     "question_id": 50,
     "question_text": "次のプログラムを正しく説明しているものはどれですか。\n1  public record Person(String name, int age) {\n2      public Person {\n3         if (age < 0) throw new IllegalArgumentException();\n4      }\n5  }",
-    "question_image": null,
+    "question_image": "50.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1632,7 +1632,7 @@
   {
     "question_id": 51,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n1  public class Main {\n2      public static void main(String[] args) {\n3         int x = 5;\n4         System.out.println(x > 2 ? x < 4 ? 10 : 8 : 7);\n5      }\n6  }",
-    "question_image": null,
+    "question_image": "51.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1657,7 +1657,7 @@
   {
     "question_id": 52,
     "question_text": "次のプログラム (抜粋) をコンパイル、実行するとどのような結果になりますか。\n4         StringBuilder sb = new StringBuilder(\"Java\");\n5         sb.append(\" SE\");\n6         sb.insert(4, \" 17\");\n7         System.out.println(sb);",
-    "question_image": null,
+    "question_image": "52.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1682,7 +1682,7 @@
   {
     "question_id": 53,
     "question_text": "次のプログラム (抜粋) において、(A)の箇所でコンパイルエラーを回避しつつ、変数 val に 100 を代入する方法はどれですか。\n3         Object obj = 100;\n4         int val = (A) obj;",
-    "question_image": null,
+    "question_image": "53.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1707,7 +1707,7 @@
   {
     "question_id": 54,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n1  public class Main {\n2      public static void main(String[] args) {\n3         String str = \" \";\n4         System.out.println(str.isEmpty() + \":\" + str.isBlank());\n5      }\n6  }",
-    "question_image": null,
+    "question_image": "54.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1732,7 +1732,7 @@
   {
     "question_id": 55,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n1  public class Main {\n2      public static void main(String[] args) {\n3         boolean b1 = false;\n4         boolean b2 = true;\n5         if (b1 = b2) {\n6            System.out.println(\"True\");\n7         } else {\n8            System.out.println(\"False\");\n9         }\n10     }\n11 }",
-    "question_image": null,
+    "question_image": "55.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1757,7 +1757,7 @@
   {
     "question_id": 56,
     "question_text": "次のプログラムを正しく説明しているものはどれですか。\n1  public class Main {\n2      public static void main(String[] args) {\n3         var list = List.of(\"A\", \"B\", \"C\");\n4         list.add(\"D\");\n5         System.out.println(list);\n6      }\n7  }",
-    "question_image": null,
+    "question_image": "56.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1782,7 +1782,7 @@
   {
     "question_id": 57,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n1  public class Main {\n2      public static void main(String[] args) {\n3         int i = 1;\n4         switch (i) {\n5            case 1 -> System.out.print(\"One \");\n6            case 2 -> System.out.print(\"Two \");\n7            default -> System.out.print(\"Default \");\n8         }\n9      }\n10 }",
-    "question_image": null,
+    "question_image": "57.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1807,7 +1807,7 @@
   {
     "question_id": 58,
     "question_text": "次のプログラムを正しく説明しているものはどれですか。\n1  public class Main {\n2      static int count = 0;\n3      public static void main(String[] args) {\n4         Main m1 = new Main();\n5         m1.count++;\n6         Main m2 = new Main();\n7         m2.count++;\n8         System.out.println(Main.count);\n9      }\n10 }",
-    "question_image": null,
+    "question_image": "58.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1832,7 +1832,7 @@
   {
     "question_id": 59,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n1  public class Main {\n2      public static void main(String[] args) {\n3         String s1 = \"Java\";\n4         String s2 = \"Java\";\n5         String s3 = new String(\"Java\");\n6         System.out.println((s1 == s2) + \":\" + (s1 == s3));\n7      }\n8  }",
-    "question_image": null,
+    "question_image": "59.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
@@ -1857,7 +1857,7 @@
   {
     "question_id": 60,
     "question_text": "次のプログラム（抜粋）をコンパイル、実行するとどのような結果になりますか。（1つ選択）\n\npublic class Main {\n    public static void main(String... args) {\n        try {\n            evaluate(1);\n        } catch (Exception e) {\n            System.out.println(e.getCause());\n        }\n    }\n    public static void evaluate(int value) throws Exception {\n        try {\n            switch (value) {\n                case 1 -> throw new UserException(\"User Ex!\");\n                case 2 -> throw new CustomException(\"Custom Ex!\");\n            }\n        } catch (Exception e) {\n            throw new Exception(e.getMessage(), e);\n        }\n    }\n}",
-    "question_image": null,
+    "question_image": "60.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [

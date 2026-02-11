@@ -71,7 +71,7 @@
   },
   {
     "question_id": 3,
-    "question_text": "次の記述のうち、コンパイルエラーが発生するものはどれですか。",
+    "question_text": "次の記述のうち、コンパイルエラーが発生するものはどれですか。（3つ選択）",
     "question_image": "3.jpg",
     "answer_type": "multiple",
     "answer_count": 3,
@@ -146,33 +146,33 @@
     "answer_type": "multiple",
     "answer_count": 2,
     "choices": [
-      {
+            {
         "label": "A",
-        "text": "Stringa7V 27 MA2 04K ENS"
+        "text": "Stringオブジェクトは2つ生成される"
       },
       {
         "label": "B",
-        "text": "Stringオプジェクトは3つ生成される"
+        "text": "Stringオブジェクトは3つ生成される"
       },
       {
         "label": "C",
-        "text": "StringaA7V27 bad DERENS!"
+        "text": "Stringオブジェクトは4つ生成される"
       },
       {
         "label": "D",
-        "text": "Stringオプジェクトは5つ生成される"
+        "text": "Stringオブジェクトは5つ生成される"
       },
       {
         "label": "E",
-        "text": "s1 == s2 の結果は true となる"
+        "text": "s1 == s2の結果はtrueとなる"
       },
       {
         "label": "F",
-        "text": "sl==s3 の結果は true となる"
+        "text": "s1 == s3の結果はtrueとなる"
       },
       {
         "label": "G",
-        "text": "s1 =ニ= s5 の結果は true となる"
+        "text": "s1 == s5の結果はtrueとなる"
       }
     ]
   },
@@ -240,30 +240,30 @@
   },
   {
     "question_id": 8,
-    "question_text": "次のローカル変数の宣言で、コンパイルエラーが発生しないものはどれですか。",
+    "question_text": "次のローカル変数の宣言で、コンパイルエラーが発生しないものはどれですか。（2つ選択）",
     "question_image": "8.jpg",
     "answer_type": "multiple",
     "answer_count": 2,
     "choices": [
       {
         "label": "A",
-        "text": "vara=-1 00:"
+        "text": "var a = -1___00;"
       },
       {
         "label": "B",
-        "text": "varb=100 L:"
+        "text": "var b = 100_L;"
       },
       {
         "label": "C",
-        "text": "varc=0b_0000_ 0000 0000.0000 0000.0000_0000_0100:"
+        "text": "var c = 0b_0000_0000_0000_0000_0000_0000_0000_0100;"
       },
       {
         "label": "D",
-        "text": "vard = Oxf_f_f_fL;"
+        "text": "var d = 0xf_f_f_fL;"
       },
       {
         "label": "E",
-        "text": "vare = Oxadd_;"
+        "text": "var e = 0xadd_;"
       },
       {
         "label": "F",
@@ -317,27 +317,27 @@
     "choices": [
       {
         "label": "A",
-        "text": "Javaアプリケーションの実行に必要な main()メソッドの宣言は、3 行目のように仮引数に String型の可変長引数を 1 つ指定できる"
+        "text": "Javaアプリケーションの実行に必要なmain()メソッドの宣言は、3行目のように仮引数にString型の可変長引数を1つ指定できる"
       },
       {
         "label": "B",
-        "text": "Java アプリケーションの実行に必要な main0メソッドをクラス内の先頭に記述していないため、java コマンドで Main クラスを指定しても実行に失敗する"
+        "text": "Javaアプリケーションの実行に必要なmain()メソッドをクラス内の先頭に記述していないため、javaコマンドでMainクラスを指定しても実行に失敗する"
       },
       {
         "label": "C",
-        "text": "java コマンドを実行すると 3 行目の main0メソッドが呼ばれ、次に 2 行目の main0メソッドが呼ばれて Main オブジェクトが生成される"
+        "text": "javaコマンドを実行すると3行目のmain()メソッドが呼ばれ、次に2行目のmain()メソッドが呼ばれてMainオブジェクトが生成される"
       },
       {
         "label": "D",
-        "text": "main0メソッドはオーバーロードできないためコンパイルエラーが発生する"
+        "text": "main()メソッドはオーバーロードできないためコンパイルエラーが発生する"
       },
       {
         "label": "E",
-        "text": "クラスに public が付いていないため new Main)でコンパイルエラーが発生する"
+        "text": "クラスにpublicが付いていないためnew Main()でコンパイルエラーが発生する"
       },
       {
         "label": "F",
-        "text": "コンストラクタが宣言されていないため new Main0でコンパイルエラーが発生する"
+        "text": "コンストラクタが宣言されていないためnew Main()でコンパイルエラーが発生する"
       }
     ]
   },
@@ -348,9 +348,9 @@
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
-      {
+{
         "label": "A",
-        "text": "ArrayIndexOutOfBoundsException がスローされる"
+        "text": "ArrayIndexOutOfBoundsExceptionがスローされる"
       },
       {
         "label": "B",
@@ -358,23 +358,23 @@
       },
       {
         "label": "C",
-        "text": "cgunt:9 が出力される"
+        "text": "count:9が出力される"
       },
       {
         "label": "D",
-        "text": "count? が出力される"
+        "text": "count:7が出力される"
       },
       {
         "label": "E",
-        "text": "counté が出力される"
+        "text": "count:6が出力される"
       },
       {
         "label": "F",
-        "text": "count:1 が出力される"
+        "text": "count:1が出力される"
       },
       {
         "label": "G",
-        "text": "count0 が出力される"
+        "text": "count:0が出力される"
       }
     ]
   },

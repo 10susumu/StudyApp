@@ -224,12 +224,25 @@ function render() {
         dom.qText.textContent = q.question_text;
     }
 
+    // ★ answer_type に応じて input type 切替
+    const inputType = q.answer_type === 'multiple' ? 'checkbox' : 'radio';
+
     q.choices.forEach(c => {
         const label = document.createElement('label');
         label.className = 'choice-item';
-        label.innerHTML =
-            `<input type="radio" name="ans" value="${c.label}">
-             ${c.label}: ${c.text}`;
+
+        const input = document.createElement('input');
+        input.type = inputType;
+        input.name = 'ans';
+        input.value = c.label;
+
+        label.appendChild(input);
+
+        // ★ ここを textContent に変更
+        label.appendChild(
+            document.createTextNode(` ${c.label}: ${c.text}`)
+        );
+
         dom.choices.appendChild(label);
     });
 

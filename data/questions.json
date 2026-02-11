@@ -457,27 +457,27 @@
     "choices": [
       {
         "label": "A",
-        "text": "if(x.equals(y)) i = 1: else i = 2;"
+        "text": "if(x.equals(y)) i = 1; else i = 2;"
       },
       {
         "label": "B",
-        "text": "if equals(y)) i = 1; else if (y.equals(x)) i = 2; else i = 3;"
+        "text": "if (x.equals(y)) i = 1; else if (y.equals(x)) i = 2; else i = 3;"
       },
       {
         "label": "C",
-        "text": "if equals(y)) i = 1; if(x.equals(y)}) i = 2; ifty-equals(x)) i = 3;"
+        "text": "if(x.equals(y)) i = 1; if(!x.equals(y)) i = 2; if(y.equals(x)) i = 3;"
       },
       {
         "label": "D",
-        "text": "if(x.equals(y)) i = 2; if(ly.equals(x)) i = 1; else i = 3;"
+        "text": "if(!x.equals(y)) i = 2; if(!y.equals(x)) i = 1; else i = 3;"
       },
       {
         "label": "E",
-        "text": "if(x.equals(y)) { i=1; if(y.equals(x)) i = 2; }"
+        "text": "if(x.equals(y)) { i = 1; if(y.equals(x)) i = 2; }"
       },
       {
         "label": "F",
-        "text": "if(x.equals(y)) { i (y.equals(x)) i = 3; i=2; }"
+        "text": "if(!x.equals(y)) {\n if (!y.equals(x)) i = 3; i = 2; }"
       }
     ]
   },
@@ -490,31 +490,31 @@
     "choices": [
       {
         "label": "A",
-        "text": "Aのprotected を private に変更する"
+        "text": "Aのprotectedをprivateに変更する"
       },
       {
         "label": "B",
-        "text": "Bのprint0に public を指定する"
+        "text": "Bのprint()にpublicを指定する"
       },
       {
         "label": "C",
-        "text": "Cのname を super(name)に変更する"
+        "text": "Cのnameをsuper(name)に変更する"
       },
       {
         "label": "D",
-        "text": "Dにimport app.sub.Sub:を指定する"
+        "text": "Dにimport app.sub.Sub;を指定する"
       },
       {
         "label": "E",
-        "text": "Dc import app.*.*を指定する"
+        "text": "Dにimport app.*.*;を指定する"
       },
       {
         "label": "F",
-        "text": "Eをapp.sub.Sub obj = new Sub():に変更する"
+        "text": "Eをapp.sub.Sub obj = new Sub();に変更する"
       },
       {
         "label": "G",
-        "text": "Eを Sub obj = new app.sub.Sub0:に変更する"
+        "text": "EをSub obj = new app.sub.Sub();に変更する"
       }
     ]
   },

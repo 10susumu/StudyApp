@@ -624,39 +624,18 @@
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
-      {
-        "label": "A",
-        "text": "FTF が出力される"
-      },
-      {
-        "label": "B",
-        "text": "FFT が出力される"
-      },
-      {
-        "label": "C",
-        "text": "TFT が出力される"
-      },
-      {
-        "label": "D",
-        "text": "TTF が出力される"
-      },
-      {
-        "label": "E",
-        "text": "TTT が出力される"
-      },
-      {
-        "label": "F",
-        "text": "AからCは、戻り値の型が大切でないためコンパイルエラーが発生する"
-      },
-      {
-        "label": "G",
-        "text": "AからD は、アクセス修飾子の指定が遮切でないためコンパイルエラーが発生する"
-      }
+      { "label": "A", "text": "FTFが出力される" },
+      { "label": "B", "text": "FFTが出力される" },
+      { "label": "C", "text": "TFTが出力される" },
+      { "label": "D", "text": "TTFが出力される" },
+      { "label": "E", "text": "TTTが出力される" },
+      { "label": "F", "text": "AからCは、戻り値の型が適切でないためコンパイルエラーが発生する" },
+      { "label": "G", "text": "AからDは、アクセス修飾子の指定が適切でないためコンパイルエラーが発生する" }
     ]
   },
   {
     "question_id": 20,
-    "question_text": "次のプログラム (抜粋) をコンパイル、実行するとどのような結果になりますか。\n2  public class Main {\n3      public static void main(String... args) {\n4         double[] oldPrice = {7.95, 10.0, 25.99};\n5          double[] newPrice = new double[oldPrice. length] ;\n6        for (int i = 0; i < oldPrice.length; i++) {\n7           if (oldPrice[i] < 10) newPrice[i] = oldPrice[i] += 23\n8           else if (oldPrice[i] > 20) newPrice[i] = --oldPrice[i];\n9             else newPrice[i] = ++oldPricelil;\n16         +\n11         System.out.pr1nttn(Arrays.toStr1ng(newPr1ce) ) :\n12      +\n13 }",
+    "question_text": "次のプログラム (抜粋) をコンパイル、実行するとどのような結果になりますか。（1つ選択）'''double[] oldPrice = {7.95, 10.0, 25.99};double[] newPrice = new double[oldPrice.length];for (int i = 0; i < oldPrice.length; i++) {    if (oldPrice[i] < 10) newPrice[i] = oldPrice[i] += 2;    else if (oldPrice[i] > 20) newPrice[i] = --oldPrice[i];    else newPrice[i] = ++oldPrice[i];}System.out.println(Arrays.toString(newPrice));'''",
     "question_image": "20.jpg",
     "answer_type": "single",
     "answer_count": 1,
@@ -696,40 +675,40 @@
     "choices": [
       {
         "label": "A",
-        "text": "Aのthrow 以降を、throw new Exception();に変更する"
+        "text": "Aのthrow以降を、throw new Exception();に変更する"
       },
       {
         "label": "B",
-        "text": "B の行を、throw new Throwable(\"Incorrect letter\");に変更する"
+        "text": "Bの行を、throw new Throwable(\"Incorrect letter\");に変更する"
       },
       {
         "label": "C",
-        "text": "Bの行を、throw new RuntimeException();に変更する"
+        "text": "Bの行を、throw new Exception();に変更する"
       },
       {
         "label": "D",
-        "text": "main()に throws Exception を指定する"
+        "text": "main()に throws Exceptionを指定する"
       },
       {
         "label": "E",
-        "text": "methodA()に throws Exception を指定する"
+        "text": "methodA()に throws Exceptionを指定する"
       },
       {
         "label": "F",
-        "text": "methodB()に throws Exception を指定する"
+        "text": "methodB()に throws Exceptionを指定する"
       }
     ]
   },
   {
     "question_id": 22,
-    "question_text": "次の記述のうちコンパイルエラーが発生するものはどれですか。",
+    "question_text": "次の記述のうちコンパイルエラーが発生するものはどれですか。（2つ選択）",
     "question_image": "22.jpg",
     "answer_type": "multiple",
     "answer_count": 2,
     "choices": [
       {
         "label": "A",
-        "text": "class A { public void x() {} }"
+        "text": "class A { public void x(); }"
       },
       {
         "label": "B",
@@ -862,35 +841,17 @@
   },
   {
     "question_id": 26,
-    "question_text": "次のプログラム (抜粋) をコンパイル、実行するとどのような結果になりますか。\n4        Integer[] number = {0b011, 5, 10, 0x00C};\n5        for (var i = 0; i < number.length; i++) {\n6           number[i] = Calc.operate(number[i]);      // (A)\n7        }\n8        System.out.println(Arrays.toString(number));\n...\n12     public static int operate(Integer obj)           // (B)\n13                  throws RuntimeException {\n14        return switch (obj) {\n15           case 3, 4, 5 -> ++obj;\n16           default -> --obj;\n17        };\n18     }",
+    "question_text": "次のプログラム (抜粋) をコンパイル、実行するとどのような結果になりますか。（1つ選択）\n4        Integer[] number = {0b011, 5, 10, 0x00C};\n5        for (var i = 0; i < number.length; i++) {\n6           number[i] = Calc.operate(number[i]);      // (A)\n7        }\n8        System.out.println(Arrays.toString(number));\n...\n12     public static int operate(Integer obj)           // (B)\n13                  throws RuntimeException {\n14        return switch (obj) {\n15           case 3, 4, 5 -> ++obj;\n16           default -> --obj;\n17        };\n18     }",
     "question_image": "26.jpg",
     "answer_type": "single",
     "answer_count": 1,
     "choices": [
-      {
-        "label": "A",
-        "text": "Aのoperate()の呼び出しで RuntimeException がスローされる"
-      },
-      {
-        "label": "B",
-        "text": "Bのoperate()の宣言でコンパイルエラーが発生する"
-      },
-      {
-        "label": "C",
-        "text": "[3, 5, 10, 10]が出力される"
-      },
-      {
-        "label": "D",
-        "text": "[4, 6, 9, 11]が出力される"
-      },
-      {
-        "label": "E",
-        "text": "[2, 6, 9, 11]が出力される"
-      },
-      {
-        "label": "F",
-        "text": "[5, 6, 10, 11]が出力される"
-      }
+      { "label": "A", "text": "Aのoperate()の呼び出しでRuntimeExceptionがスローされる" },
+      { "label": "B", "text": "Bのoperate()の宣言でコンパイルエラーが発生する" },
+      { "label": "C", "text": "[3, 5, 10, 10]が出力される" },
+      { "label": "D", "text": "[3, 6, 9, 10]が出力される" },
+      { "label": "E", "text": "[4, 6, 9, 11]が出力される" },
+      { "label": "F", "text": "[5, 6, 10, 11]が出力される" }
     ]
   },
   {
@@ -1005,15 +966,15 @@
     "choices": [
       {
         "label": "A",
-        "text": "text.indexOf('m') == 2"
+        "text": "text.indexOf(\"m\") == 4"
       },
       {
         "label": "B",
-        "text": "text.indexOf('m', 4) == 7"
+        "text": "text.indexOf(\"m\", 4) == 7"
       },
       {
         "label": "C",
-        "text": "text.length() == 10"
+        "text": "text.length() == 9"
       },
       {
         "label": "D",

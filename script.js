@@ -50,6 +50,8 @@ const dom = {
     scoreW: document.getElementById('wrong-count'),
     scoreP: document.getElementById('score-percent'),
     resumeBtn: document.getElementById('resume-btn'),
+    currentIdx: document.getElementById('current-idx'),
+    totalIdx: document.getElementById('total-idx'),
     qNumber: null
 };
 
@@ -166,9 +168,10 @@ function render() {
     const list = state.currentList;
 
     if (!dom.qNumber) {
-        dom.qNumber = document.createElement('div');
+        dom.qNumber = document.createElement('span');
         dom.qNumber.className = 'question-number';
-        dom.qText.before(dom.qNumber);
+        // dom.qText.before(dom.qNumber);
+        dom.totalIdx.after(dom.qNumber);
     }
 
     dom.form.reset();
@@ -246,8 +249,8 @@ function render() {
         dom.choices.appendChild(label);
     });
 
-    document.getElementById('current-idx').textContent = state.currentIndex + 1;
-    document.getElementById('total-idx').textContent = list.length;
+    dom.currentIdx.textContent = state.currentIndex + 1;
+    dom.totalIdx.textContent = list.length + " ";
 }
 
 // ========================

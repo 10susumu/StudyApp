@@ -1333,31 +1333,31 @@
     "choices": [
       {
         "label": "A",
-        "text": "A B C が出力される"
+        "text": "abcxyz:3:abcxyz:1:が出力される"
       },
       {
         "label": "B",
-        "text": "A B が出力される"
+        "text": "abcxyz:3:abc:1:が出力される"
       },
       {
         "label": "C",
-        "text": "A C が出力される"
+        "text": "xyz:1:xyz:2:が出力される"
       },
       {
         "label": "D",
-        "text": "B C が出力される"
+        "text": "xyz:2:abc:1:が出力される"
       },
       {
         "label": "E",
-        "text": "A が出力される"
+        "text": "abc:1:xyz:2:が出力される"
       },
       {
         "label": "F",
-        "text": "B が出力される"
+        "text": "xyz:3:abc:1:が出力される"
       },
       {
         "label": "G",
-        "text": "C が出力される"
+        "text": "xyz:3:xyz:1:が出力される"
       }
     ]
   },
@@ -1370,23 +1370,27 @@
     "choices": [
       {
         "label": "A",
-        "text": "10 が出力される"
+        "text": "11:6が出力される"
       },
       {
         "label": "B",
-        "text": "20 が出力される"
+        "text": "12.5:6が出力される"
       },
       {
         "label": "C",
-        "text": "30 が出力される"
+        "text": "11.0:6.0が出力される"
       },
       {
         "label": "D",
-        "text": "35 が出力される"
+        "text": "11:6.0が出力される"
       },
       {
         "label": "E",
-        "text": "40 が出力される"
+        "text": "コンパイルエラーが発生する"
+      },
+      {
+        "label": "F",
+        "text": "この中にはない"
       }
     ]
   },
@@ -1399,19 +1403,31 @@
     "choices": [
       {
         "label": "A",
-        "text": "SE 17 が出力される"
+        "text": "Open Close Close が出力される"
       },
       {
         "label": "B",
-        "text": "SE 1 が出力される"
+        "text": "Open Close が出力される"
       },
       {
         "label": "C",
-        "text": "Java が出力される"
+        "text": "Open Close Friday が出力される"
       },
       {
         "label": "D",
-        "text": "StringIndexOutOfBoundsException がスローされる"
+        "text": "Open Close Friday Close が出力される"
+      },
+      {
+        "label": "E",
+        "text": "Open Close Friday の後に例外の詳細メッセージが出力される"
+      },
+      {
+        "label": "F",
+        "text": "例外の詳細メッセージのみが出力される"
+      },
+      {
+        "label": "G",
+        "text": "コンパイルエラーが発生する"
       }
     ]
   },
@@ -1424,19 +1440,27 @@
     "choices": [
       {
         "label": "A",
-        "text": "正常にコンパイル、実行でき、Printing... が出力される"
+        "text": "list.set(1, new Customer(200, \"James\"));"
       },
       {
         "label": "B",
-        "text": "インターフェースに @FunctionalInterface がないため、コンパイルエラーが発生する"
+        "text": "list.add(1, new Customer(200, \"James\"));"
       },
       {
         "label": "C",
-        "text": "ラムダ式の記述が正しくないため、コンパイルエラーが発生する"
+        "text": "list.put(200, \"James);"
       },
       {
         "label": "D",
-        "text": "インターフェースのインスタンス化はできないため、コンパイルエラーが発生する"
+        "text": "list.put(1, new Customer(200, \"James\"));"
+      },
+      {
+        "label": "E",
+        "text": "list.update(1, new Customer(200, \"James\"));"
+      },
+      {
+        "label": "F",
+        "text": "list.update(200, \"James\");"
       }
     ]
   },
@@ -1449,19 +1473,23 @@
     "choices": [
       {
         "label": "A",
-        "text": "6 が出力される"
+        "text": "sealedで宣言されたインタフェースA、Bにはpermits Cを指定しなければならない"
       },
       {
         "label": "B",
-        "text": "9 が出力される"
+        "text": "sealedで宣言されたインタフェースはクラスへの実装のみを許可するため、インタフェースCをクラスとして宣言し、implements A, Bとする"
       },
       {
         "label": "C",
-        "text": "15 が出力される"
+        "text": "インタフェースCの宣言において、複数のインタフェースを継承することはできないため、extendsにはAまたはBのどちらかのみを指定する"
       },
       {
         "label": "D",
-        "text": "1 が出力される"
+        "text": "インタフェースA、Bのdefaultメソッドが衝突するため、インタフェースCでoperate()をオーバーライドし、衝突を回避する"
+      },
+      {
+        "label": "E",
+        "text": "インタフェースA、BのdefaultメソッドはインタフェースCでのオーバーライドに失敗するため、インタフェースCのextendsにはAまたはBのどちらかのみを指定する"
       }
     ]
   },
@@ -1474,19 +1502,27 @@
     "choices": [
       {
         "label": "A",
-        "text": "Base Sub Default が出力される"
+        "text": "varで宣言した変数はswitch文で使用できないため、Aでコンパイルエラーが発生する"
       },
       {
         "label": "B",
-        "text": "Sub Default Base が出力される"
+        "text": "Bのcaseの指定は適切であり、xの値は5であるため、プログラムを実行するとBが出力される"
       },
       {
         "label": "C",
-        "text": "Base Default Sub が出力される"
+        "text": "Cのcaseの指定は適切でないため、コンパイルエラーが発生する"
       },
       {
         "label": "D",
-        "text": "Sub Base Default が出力される"
+        "text": "Dのcaseの指定は適切でないため、コンパイルエラーが発生する"
+      },
+      {
+        "label": "E",
+        "text": "switch文では例外をスローすることはできないため、Eでコンパイルエラーが発生する"
+      },
+      {
+        "label": "F",
+        "text": "yieldは「:」と共に使用できないため、コンパイルエラーが発生する"
       }
     ]
   },
@@ -1499,19 +1535,31 @@
     "choices": [
       {
         "label": "A",
-        "text": "ArrayList は要素の重複を許可する"
+        "text": "Sub() {}"
       },
       {
         "label": "B",
-        "text": "ArrayList は要素の並び順を保持しない"
+        "text": "Sub() { this(10, \"cd000\"); }"
       },
       {
         "label": "C",
-        "text": "ArrayList はインデックスを使用して要素にアクセスできる"
+        "text": "Sub(int no) { super(no); }"
       },
       {
         "label": "D",
-        "text": "ArrayList は基本データ型を直接格納できる"
+        "text": "Sub(String code) { super(); this.code = code; }"
+      },
+      {
+        "label": "E",
+        "text": "Sub(int no, String code) { super(no, code); }"
+      },
+      {
+        "label": "F",
+        "text": "Sub(String code) { super.no = 10; this.code = code; }"
+      },
+      {
+        "label": "G",
+        "text": "Sub(int no, String code) { super(no); this(code); }"
       }
     ]
   },
@@ -1519,24 +1567,36 @@
     "question_id": 48,
     "question_text": "次のプログラムをコンパイル、実行するとどのような結果になりますか。\n1  public class Main {\n2      public static void main(String[] args) {\n3         String s = null;\n4         try {\n5            System.out.print(s.length());\n6         } catch (NullPointerException e) {\n7            System.out.print(\"NPE \");\n8         } finally {\n9            System.out.print(\"Finally \");\n10        }\n11     }\n12 }",
     "question_image": "48.jpg",
-    "answer_type": "single",
-    "answer_count": 1,
+    "answer_type": "multiple",
+    "answer_count": 2,
     "choices": [
       {
         "label": "A",
-        "text": "NPE Finally が出力される"
+        "text": "A"
       },
       {
         "label": "B",
-        "text": "Finally NPE が出力される"
+        "text": "B"
       },
       {
         "label": "C",
-        "text": "NPE が出力される"
+        "text": "C"
       },
       {
         "label": "D",
-        "text": "NullPointerException がスローされ、プログラムが異常終了する"
+        "text": "D"
+      },
+      {
+        "label": "E",
+        "text": "E"
+      },
+      {
+        "label": "F",
+        "text": "F"
+      },
+      {
+        "label": "G",
+        "text": "G"
       }
     ]
   },
@@ -1549,19 +1609,31 @@
     "choices": [
       {
         "label": "A",
-        "text": "default concrete が出力される"
+        "text": "Aはthrowsにチェック例外を指定しているが、例外をスローする処理がないためコンパイルエラーが発生する"
       },
       {
         "label": "B",
-        "text": "private default concrete が出力される"
+        "text": "Bのtry-catch文の例外処理にcatchブロックがないため、コンパイルエラーが発生する"
       },
       {
         "label": "C",
-        "text": "concrete default が出力される"
+        "text": "正常にコンパイル、実行でき、Rectangle:4.0 : Doneが出力される"
       },
       {
         "label": "D",
-        "text": "コンパイルエラーが発生する"
+        "text": "正常にコンパイル、実行でき、Circle:12.56 : Doneが出力される"
+      },
+      {
+        "label": "E",
+        "text": "正常にコンパイル、実行でき、Doneが出力される"
+      },
+      {
+        "label": "F",
+        "text": "正常にコンパイルでき、Circle:12.56 : が出力された後RuntimeExceptionがスローされる"
+      },
+      {
+        "label": "G",
+        "text": "正常にコンパイルでき、Rectangle:4.0 : が出力された後Exceptionがスローされる"
       }
     ]
   },
@@ -1574,19 +1646,27 @@
     "choices": [
       {
         "label": "A",
-        "text": "これはコンパクト・コンストラクタの正しい例である"
+        "text": "(1) obj.min(10, 11) (2) A.max(10, 11)"
       },
       {
         "label": "B",
-        "text": "引数リスト (String name, int age) が省略されているためコンパイルエラーになる"
+        "text": "(1) A.min(10, 11) (2) obj.max(10, 11)"
       },
       {
         "label": "C",
-        "text": "レコード内では例外をスローできないためコンパイルエラーになる"
+        "text": "(1) MyClass.min(10,11) (2) B.super.max(10, 11)"
       },
       {
         "label": "D",
-        "text": "this.name = name; のような代入処理がないためコンパイルエラーになる"
+        "text": "(1) obj.min(10, 11) (2) obj.show()"
+      },
+      {
+        "label": "E",
+        "text": "(1) MyClass.min(10,11) (2) A.show()"
+      },
+      {
+        "label": "F",
+        "text": "(1) A.min(10, 11) (2) A.show()"
       }
     ]
   },
@@ -1599,19 +1679,27 @@
     "choices": [
       {
         "label": "A",
-        "text": "10 が出力される"
+        "text": "[10:][20:][20:product]が出力される"
       },
       {
         "label": "B",
-        "text": "8 が出力される"
+        "text": "[10:null][20:][20:product]が出力される"
       },
       {
         "label": "C",
-        "text": "7 が出力される"
+        "text": "[10:null][20:null][20:product]が出力される"
       },
       {
         "label": "D",
-        "text": "5 が出力される"
+        "text": "[10:][20:product][10:product]が出力される"
+      },
+      {
+        "label": "E",
+        "text": "NullPointerExceptionがスローされる"
+      },
+      {
+        "label": "F",
+        "text": "コンパイルエラーが発生する"
       }
     ]
   },
@@ -1624,19 +1712,27 @@
     "choices": [
       {
         "label": "A",
-        "text": "Java 17 SE が出力される"
+        "text": "None:One:Doneが出力される"
       },
       {
         "label": "B",
-        "text": "Java SE 17 が出力される"
+        "text": "true:None:Doneが出力される"
       },
       {
         "label": "C",
-        "text": "Java 17SE が出力される"
+        "text": "None:None:Doneが出力される"
       },
       {
         "label": "D",
-        "text": "StringIndexOutOfBoundsException がスローされる"
+        "text": "None:one:Done:oneが出力される"
+      },
+      {
+        "label": "E",
+        "text": "None:one:One:oneが出力される"
+      },
+      {
+        "label": "F",
+        "text": "None:true:None:oneが出力される"
       }
     ]
   },
@@ -1649,19 +1745,23 @@
     "choices": [
       {
         "label": "A",
-        "text": "(int)"
+        "text": "AでClassCastExceptionがスローされる"
       },
       {
         "label": "B",
-        "text": "(Integer)"
+        "text": "コンパイル、実行でき、falseが2回、trueが2回出力される"
       },
       {
         "label": "C",
-        "text": "Integer.parseInt((String))"
+        "text": "コンパイル、実行でき、falseが2回、trueが3回出力される"
       },
       {
         "label": "D",
-        "text": "obj.intValue()"
+        "text": "コンパイル、実行でき、falseが1回、trueが3回出力される"
+      },
+      {
+        "label": "E",
+        "text": "コンパイル、実行でき、falseが1回、trueが4回出力される"
       }
     ]
   },
@@ -1674,19 +1774,27 @@
     "choices": [
       {
         "label": "A",
-        "text": "true:true が出力される"
+        "text": "Base が出力される"
       },
       {
         "label": "B",
-        "text": "false:false が出力される"
+        "text": "Extension Base が出力される"
       },
       {
         "label": "C",
-        "text": "true:false が出力される"
+        "text": "Derived Base が出力される"
       },
       {
         "label": "D",
-        "text": "false:true が出力される"
+        "text": "Extension Base が出力された後、ClassCastExceptionがスローされる"
+      },
+      {
+        "label": "E",
+        "text": "Derived Base が出力された後、ClassCastExceptionがスローされる"
+      },
+      {
+        "label": "F",
+        "text": "コンパイルエラーが発生する"
       }
     ]
   },
@@ -1699,19 +1807,27 @@
     "choices": [
       {
         "label": "A",
-        "text": "True が出力される"
+        "text": "2:5 -1:4 が出力される"
       },
       {
         "label": "B",
-        "text": "False が出力される"
+        "text": "2:4 -1:3 が出力される"
       },
       {
         "label": "C",
-        "text": "コンパイルエラーが発生する"
+        "text": "2:5 -1:4 -4:3 が出力される"
       },
       {
         "label": "D",
-        "text": "実行時に例外がスローされる"
+        "text": "2:4 -1:3 -4:2 が出力される"
+      },
+      {
+        "label": "E",
+        "text": "2:5 -1:4 -4:3 -7:2 -10:1 -13:0 が出力される"
+      },
+      {
+        "label": "F",
+        "text": "何も出力されない"
       }
     ]
   },
@@ -1719,24 +1835,36 @@
     "question_id": 56,
     "question_text": "次のプログラムを正しく説明しているものはどれですか。\n1  public class Main {\n2      public static void main(String[] args) {\n3         var list = List.of(\"A\", \"B\", \"C\");\n4         list.add(\"D\");\n5         System.out.println(list);\n6      }\n7  }",
     "question_image": "56.jpg",
-    "answer_type": "single",
-    "answer_count": 1,
+    "answer_type": "multiple",
+    "answer_count": 3,
     "choices": [
       {
         "label": "A",
-        "text": "正常にコンパイル、実行でき、[A, B, C, D] が出力される"
+        "text": "e.getException();"
       },
       {
         "label": "B",
-        "text": "List.of で作成されたリストは不変（Immutable）であるため、実行時に例外がスローされる"
+        "text": "e.printStackTrace();"
       },
       {
         "label": "C",
-        "text": "var を使用してリストを宣言できないため、コンパイルエラーが発生する"
+        "text": "e.printError();"
       },
       {
         "label": "D",
-        "text": "List.of は引数を1つしか取れないため、コンパイルエラーが発生する"
+        "text": "e.getErrorMessage();"
+      },
+      {
+        "label": "E",
+        "text": "e.getMessage();"
+      },
+      {
+        "label": "F",
+        "text": "e.getCause();"
+      },
+      {
+        "label": "G",
+        "text": "e.printErrorTrace();"
       }
     ]
   },
@@ -1749,19 +1877,23 @@
     "choices": [
       {
         "label": "A",
-        "text": "One が出力される"
+        "text": "AのShapeインタフェースにsealedを指定し、permitsにはCircleのみを指定する"
       },
       {
         "label": "B",
-        "text": "One Two Default が出力される"
+        "text": "Bのcalc()メソッドはCircleインタフェースから削除する"
       },
       {
         "label": "C",
-        "text": "One Two が出力される"
+        "text": "Cをif(calc instanceof Calculator c) c.calc();に変更する"
       },
       {
         "label": "D",
-        "text": "コンパイルエラーが発生する"
+        "text": "Dをif(calc instanceof Shape s) s.draw();に変更する"
+      },
+      {
+        "label": "E",
+        "text": "RectangleとTriangleクラスにCircleクラスと同じdraw()メソッドを追加する"
       }
     ]
   },
@@ -1769,24 +1901,28 @@
     "question_id": 58,
     "question_text": "次のプログラムを正しく説明しているものはどれですか。\n1  public class Main {\n2      static int count = 0;\n3      public static void main(String[] args) {\n4         Main m1 = new Main();\n5         m1.count++;\n6         Main m2 = new Main();\n7         m2.count++;\n8         System.out.println(Main.count);\n9      }\n10 }",
     "question_image": "58.jpg",
-    "answer_type": "single",
-    "answer_count": 1,
+    "answer_type": "multiple",
+    "answer_count": 2,
     "choices": [
       {
         "label": "A",
-        "text": "0 が出力される"
+        "text": "record Rectangle(int height, int width) { public int calc() { return height * width; } }"
       },
       {
         "label": "B",
-        "text": "1 が出力される"
+        "text": "final class Rectangle implements Shape { public Integer calc(double base) { return 100; } }"
       },
       {
         "label": "C",
-        "text": "2 が出力される"
+        "text": "record Rectangle(Long height, Long width) implements Shape { public Long calc() { return height * width; } }"
       },
       {
         "label": "D",
-        "text": "コンパイルエラーが発生する"
+        "text": "non-sealed class Rectangle extends Shape { public Double calc() { return height * width; } }"
+      },
+      {
+        "label": "E",
+        "text": "final class Rectangle implements Shape { public Integer calc() { return 100; } }"
       }
     ]
   },
@@ -1799,19 +1935,27 @@
     "choices": [
       {
         "label": "A",
-        "text": "true:true が出力される"
+        "text": "concrete default private が出力される"
       },
       {
         "label": "B",
-        "text": "true:false が出力される"
+        "text": "default private concrete が出力される"
       },
       {
         "label": "C",
-        "text": "false:true が出力される"
+        "text": "private default concrete が出力される"
       },
       {
         "label": "D",
-        "text": "false:false が出力される"
+        "text": "private default が出力される"
+      },
+      {
+        "label": "E",
+        "text": "private concrete が出力される"
+      },
+      {
+        "label": "F",
+        "text": "コンパイルエラーが発生する"
       }
     ]
   },

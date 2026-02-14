@@ -294,3 +294,103 @@ body {
   opacity: 0.4;
   cursor: default;
 }
+
+/* =========================
+   スマホ用（768px以下）
+========================= */
+
+@media (max-width: 768px) {
+
+  html {
+    font-size: 16px;
+  }
+
+  body {
+    line-height: 1.6;
+  }
+
+  #app {
+    padding: 14px;
+  }
+
+  /* ヘッダー縦並び */
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .app-header h1 {
+    font-size: 1.3rem;
+  }
+
+  /* モード・再開・ナビは折り返し */
+  .mode-switch,
+  .resume-area,
+  .top-nav {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .top-nav {
+    position: static;
+    left: auto;
+  }
+
+  /* ボタン全体を押しやすく */
+  .mode-btn,
+  .nav-buttons button,
+  #submit-btn {
+    font-size: 1rem;
+    padding: 10px 14px;
+    min-height: 44px;
+  }
+
+  /* ナビボタン縦並び */
+  .nav-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .nav-buttons button {
+    width: 100%;
+  }
+
+  /* 問題文 */
+  #question-text {
+    font-size: 1.1rem;
+  }
+
+  /* 画像横いっぱい */
+  #question-text img,
+  #explanation-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* 選択肢をタップ向けに拡張 */
+  #choices-container label {
+    font-size: 1.05rem;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* 解説 */
+  #explanation-container {
+    font-size: 0.95rem;
+  }
+
+  /* スコア折り返し */
+  #score-panel {
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 0.9rem;
+  }
+
+}

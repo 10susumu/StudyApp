@@ -1,34 +1,12 @@
 const STORAGE_KEY = 'studyapp_state';
 
-function saveState() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({
-        mode: state.mode,
-        results: state.results,
-        currentIndex: state.currentIndex,
-        lastViewedQuestionId: state.lastViewedQuestionId ?? null
-    }));
-}
-
-function loadState() {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return;
-
-    try {
-        const saved = JSON.parse(raw);
-        state.mode = saved.mode || 'normal';
-        state.results = saved.results || {};
-        state.currentIndex = saved.currentIndex || 0;
-        state.lastViewedQuestionId = saved.lastViewedQuestionId ?? null;
-    } catch {
-        console.warn('保存データの読み込みに失敗');
-    }
-}
-
 const CONFIG = {
     Q_DATA: './data/questions.json',
     E_DATA: './data/explanations.json',
-    IMAGE_DATA: './assets/',
+    IMAGE_API: 'https://study-image-api.s-i-19921029.workers.dev/image/'
 };
+
+let appPassword = null;
 
 let state = {
     questions: [],
@@ -52,14 +30,51 @@ const dom = {
     resumeBtn: document.getElementById('resume-btn'),
     currentIdx: document.getElementById('current-idx'),
     totalIdx: document.getElementById('total-idx'),
-    qNumber: null
+    qNumber: null,
+    imageContainer: document.getElementById('image-container')
 };
 
+function saveState() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        mode: state.mode,
+        results: state.results,
+        currentIndex: state.currentIndex,
+        lastViewedQuestionId: state.lastViewedQuestionId ?? null
+    }));
+}
+
+function loadState() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    try {
+        const saved = JSON.parse(raw);
+        state.mode = saved.mode || 'normal';
+        state.results = saved.results || {};
+        state.currentIndex = saved.currentIndex || 0;
+        state.lastViewedQuestionId = saved.lastViewedQuestionId ?? null;
+    } catch {}
+}
+
+function setupAuth() {
+    const btn = document.getElementById("auth-btn");
+    const status = document.getElementById("auth-status");
+
+    btn.onclick = () => {
+        const pass = document.getElementById("auth-password").value;
+        if (!pass) return;
+        appPassword = pass;
+        status.textContent = "認証済";
+    };
+}
+
 async function init() {
+    setupAuth();
+
     const [qRes, eRes] = await Promise.all([
         fetch(CONFIG.Q_DATA),
         fetch(CONFIG.E_DATA)
     ]);
+
     state.questions = await qRes.json();
     state.explanations = await eRes.json();
 
@@ -74,7 +89,7 @@ async function init() {
     }
 
     updateResumeButton();
-    render();
+    await render();
 }
 
 function setupModeButtons() {
@@ -85,13 +100,10 @@ function setupModeButtons() {
     function activate(btn, text, mode) {
         document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-
         document.getElementById('mode-indicator').textContent = text;
         state.mode = mode;
-
         buildCurrentList();
         state.currentIndex = 0;
-
         saveState();
         updateResumeButton();
         render();
@@ -101,17 +113,13 @@ function setupModeButtons() {
     wm.onclick = () => activate(wm, '現在のモード：不正解のみ', 'wrong');
     sm.onclick = () => activate(sm, '現在のモード：ランダム', 'shuffle');
 
-    // ★ 前回から再開
     dom.resumeBtn.onclick = () => {
         if (!state.lastViewedQuestionId) return;
-
         state.mode = 'normal';
         buildCurrentList();
-
         const idx = state.currentList.findIndex(
             q => q.question_id === state.lastViewedQuestionId
         );
-
         if (idx !== -1) {
             state.currentIndex = idx;
             render();
@@ -125,21 +133,21 @@ function updateResumeButton() {
 
 function setupNavButtons() {
     ['prev-btn', 'prev-btn-top'].forEach(id => {
-        document.getElementById(id).onclick = () => {
+        document.getElementById(id).onclick = async () => {
             if (state.currentIndex > 0) {
                 state.currentIndex--;
                 saveState();
-                render();
+                await render();
             }
         };
     });
 
     ['next-btn', 'next-btn-top'].forEach(id => {
-        document.getElementById(id).onclick = () => {
+        document.getElementById(id).onclick = async () => {
             if (state.currentIndex < state.currentList.length - 1) {
                 state.currentIndex++;
                 saveState();
-                render();
+                await render();
             }
         };
     });
@@ -164,141 +172,49 @@ function buildCurrentList() {
         : [...base];
 }
 
-function render() {
+async function render() {
     const list = state.currentList;
-
-    if (!dom.qNumber) {
-        dom.qNumber = document.createElement('span');
-        dom.qNumber.className = 'question-number';
-        // dom.qText.before(dom.qNumber);
-        dom.totalIdx.after(dom.qNumber);
-    }
-
-    dom.form.reset();
-    dom.choices.innerHTML = '';
-    dom.exp.classList.add('hidden');
-    dom.validMsg.classList.add('hidden');
 
     if (!list.length) {
         dom.qText.textContent = '出題できる問題がありません';
-        dom.qNumber.style.display = 'none';
         return;
     }
 
     const q = list[state.currentIndex];
 
-    // ★ 通常モードのみ履歴保存
-    if (state.mode === 'normal') {
-        state.lastViewedQuestionId = q.question_id;
-        saveState();
-        updateResumeButton();
-    }
-
-    dom.qNumber.textContent = `問題ID：${q.question_id}`;
-
-    // ★ 問題画像表示処理
     if (q.question_image) {
-        const imgPath = CONFIG.IMAGE_DATA + q.question_image;
+        if (!appPassword) {
+            dom.imageContainer.innerHTML = "パスワード認証が必要です";
+            dom.qText.style.display = 'none';
+        } else {
+            const imageId = q.question_image.replace('.jpg','');
 
-        dom.imageContainer = document.getElementById('image-container');
-    dom.imageContainer.innerHTML = '';
+            const res = await fetch(
+                CONFIG.IMAGE_API + imageId,
+                { headers: { "X-Auth-Password": appPassword } }
+            );
 
-    const img = document.createElement('img');
-    img.src = imgPath;
-    img.alt = '問題画像';
-    img.className = 'question-img';
-
-    // ★ 画像読み込み失敗時
-    img.onerror = () => {
-        dom.imageContainer.style.display = 'none';
-        dom.qText.style.display = 'block';
-        dom.qText.textContent = q.question_text;
-    };
-
-    dom.qText.style.display = 'none';
-    dom.imageContainer.appendChild(img);
-        dom.imageContainer.style.display = 'block';
-
+            if (!res.ok) {
+                dom.imageContainer.innerHTML = "画像取得失敗";
+            } else {
+                const blob = await res.blob();
+                const imgUrl = URL.createObjectURL(blob);
+                dom.imageContainer.innerHTML = '';
+                const img = document.createElement('img');
+                img.src = imgUrl;
+                img.className = 'question-img';
+                dom.imageContainer.appendChild(img);
+            }
+            dom.qText.style.display = 'none';
+        }
     } else {
-        dom.imageContainer = document.getElementById('image-container');
         dom.imageContainer.innerHTML = '';
-        dom.imageContainer.style.display = 'none';
         dom.qText.style.display = 'block';
         dom.qText.textContent = q.question_text;
     }
-
-    // ★ answer_type に応じて input type 切替
-    const inputType = q.answer_type === 'multiple' ? 'checkbox' : 'radio';
-
-    q.choices.forEach(c => {
-        const label = document.createElement('label');
-        label.className = 'choice-item';
-
-        const input = document.createElement('input');
-        input.type = inputType;
-        input.name = 'ans';
-        input.value = c.label;
-
-        label.appendChild(input);
-
-        // ★ ここを textContent に変更
-        label.appendChild(
-            document.createTextNode(` ${c.label}: ${c.text}`)
-        );
-
-        dom.choices.appendChild(label);
-    });
 
     dom.currentIdx.textContent = state.currentIndex + 1;
     dom.totalIdx.textContent = list.length + " ";
-}
-
-// ========================
-// 回答処理
-// ========================
-dom.form.onsubmit = e => {
-    e.preventDefault();
-
-    const selected = Array.from(new FormData(dom.form).getAll('ans'));
-    if (!selected.length) {
-        dom.validMsg.classList.remove('hidden');
-        return;
-    }
-
-    const q = state.currentList[state.currentIndex];
-    const ex = state.explanations.find(e => e.question_id === q.question_id);
-    const correct = ex.correct_answers.sort();
-    const isCorrect = JSON.stringify(selected.sort()) === JSON.stringify(correct);
-
-    state.results[q.question_id] = isCorrect;
-    saveState();   // ★追加
-
-    document.querySelectorAll('.choice-item').forEach(l => {
-        const v = l.querySelector('input').value;
-        if (!isCorrect && correct.includes(v)) {
-            l.classList.add('correct-highlight');
-        }
-    });
-
-    dom.exp.classList.remove('hidden');
-    dom.exp.className = isCorrect ? 'correct-ui' : 'wrong-ui';
-    document.getElementById('result-badge').textContent = isCorrect ? '✓ 正解' : '× 不正解';
-    document.getElementById('correct-answer-text').textContent = correct.join(', ');
-    document.getElementById('explanation-text').textContent = ex.explanation_text;
-
-    updateScore();
-};
-
-// ========================
-// スコア
-// ========================
-function updateScore() {
-    const v = Object.values(state.results);
-    dom.scoreC.textContent = v.filter(x => x).length;
-    dom.scoreW.textContent = v.filter(x => !x).length;
-    dom.scoreP.textContent = state.questions.length
-        ? Math.round((v.filter(x => x).length / state.questions.length) * 100)
-        : 0;
 }
 
 init();

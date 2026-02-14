@@ -1,9 +1,9 @@
 const STORAGE_KEY = 'studyapp_state';
 
 const CONFIG = {
-    Q_DATA: './data/questions.json',
-    E_DATA: './data/explanations.json',
-    IMAGE_API: 'https://study-image-api.s-i-19921029.workers.dev/image/'
+    Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/questions',
+    E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/explanations',
+    IMAGE_API: 'https://study-image-api.s-i-19921029.workers.dev/assets/image/'
 };
 
 let appPassword = null;
@@ -62,24 +62,30 @@ function setupAuth() {
     btn.onclick = async () => {
         const pass = document.getElementById("auth-password").value;
         if (!pass) return;
+
         appPassword = pass;
         status.textContent = "認証済";
-
         document.getElementById("auth-area").classList.add('hidden');
+
+        const [qRes, eRes] = await Promise.all([
+            fetch(CONFIG.Q_DATA, {
+                headers: { "X-Auth-Password": appPassword }
+            }),
+            fetch(CONFIG.E_DATA, {
+                headers: { "X-Auth-Password": appPassword }
+            })
+        ]);
+
+        state.questions = await qRes.json();
+        state.explanations = await eRes.json();
+
+        buildCurrentList();
         await render();
     };
 }
 
 async function init() {
     setupAuth();
-
-    const [qRes, eRes] = await Promise.all([
-        fetch(CONFIG.Q_DATA),
-        fetch(CONFIG.E_DATA)
-    ]);
-
-    state.questions = await qRes.json();
-    state.explanations = await eRes.json();
 
     setupModeButtons();
     setupNavButtons();

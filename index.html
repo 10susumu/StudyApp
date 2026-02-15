@@ -54,7 +54,10 @@
       <form id="answer-form">
         <div id="choices-container"></div>
         <div id="validation-msg" class="hidden">回答を選択してください</div>
-        <button id="submit-btn" type="submit">回答する</button>
+        <div id="submit-btn-container">
+          <button id="submit-btn" type="submit">回答する</button>
+        </div>
+
       </form>
 
       <div id="explanation-container" class="hidden">
@@ -72,6 +75,7 @@
         <span class="score-item">正解: <span id="correct-count">0</span></span>
         <span class="score-item">不正解: <span id="wrong-count">0</span></span>
         <span class="score-item highlight">得点: <span id="score-percent">0</span>%</span>
+        <button id="reset-score-btn">スコアリセット</button>
       </div>
     </main>
   </div>

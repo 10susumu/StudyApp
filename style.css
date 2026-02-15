@@ -183,6 +183,11 @@ body {
    回答ボタン
 ========================= */
 
+#submit-btn-container{
+  display: flex;
+  justify-content: center;
+}
+
 #submit-btn {
   margin-top: 8px;
   padding: 8px 18px;
@@ -205,6 +210,32 @@ body {
 }
 
 #submit-btn:disabled {
+  background: #9ca3af;
+  cursor: default;
+}
+
+#reset-score-btn{
+  margin-top: 2px;
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.05s;
+}
+
+#reset-score-btn:hover {
+  background: #1d4ed8;
+}
+
+#reset-score-btn:active {
+  transform: translateY(1px);
+}
+
+#reset-score-btn:disabled {
   background: #9ca3af;
   cursor: default;
 }

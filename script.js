@@ -86,10 +86,9 @@ function setupAuth() {
 
 async function init() {
     setupAuth();
-
     setupModeButtons();
     setupNavButtons();
-
+    document.getElementById('reset-score-btn').onclick = resetScore;
     loadState();
     buildCurrentList();
 
@@ -339,5 +338,19 @@ function updateScore() {
         ? Math.round((v.filter(x => x).length / state.questions.length) * 100)
         : 0;
 }
+
+function resetScore() {
+    state.results = {};
+    saveState();
+    updateScore();
+    buildCurrentList();
+
+    if (state.currentIndex >= state.currentList.length) {
+        state.currentIndex = 0;
+    }
+
+    render();
+}
+
 
 init();

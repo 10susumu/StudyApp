@@ -106,7 +106,7 @@ function setupModeButtons() {
     const wm = document.getElementById('wrong-only-btn');
     const sm = document.getElementById('shuffle-mode-btn');
 
-    function activate(btn, text, mode) {
+    async function activate(btn, text, mode) {
         document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         document.getElementById('mode-indicator').textContent = text;
@@ -115,7 +115,7 @@ function setupModeButtons() {
         state.currentIndex = 0;
         saveState();
         updateResumeButton();
-        render();
+        await render();
     }
 
     nm.onclick = () => activate(nm, '現在のモード：通常', 'normal');
@@ -123,7 +123,7 @@ function setupModeButtons() {
     sm.onclick = () => activate(sm, '現在のモード：ランダム', 'shuffle');
 
     // ★ 前回から再開
-    dom.resumeBtn.onclick = () => {
+    dom.resumeBtn.onclick = async () => {
         if (!state.lastViewedQuestionId) return;
         state.mode = 'normal';
         buildCurrentList();
@@ -132,7 +132,7 @@ function setupModeButtons() {
         );
         if (idx !== -1) {
             state.currentIndex = idx;
-            render();
+            await render();
         }
     };
 }
@@ -212,8 +212,8 @@ async function render() {
         updateResumeButton();
     }
 
+    dom.qNumber.style.display = 'inline';
     dom.qNumber.textContent = `問題ID：${q.question_id}`;
-    dom.qNumber.style.display = 'inline-block';
 
     // ★ 問題画像表示処理
     if (q.question_image) {

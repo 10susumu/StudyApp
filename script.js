@@ -213,6 +213,7 @@ async function render() {
     }
 
     dom.qNumber.textContent = `問題ID：${q.question_id}`;
+    dom.qNumber.style.display = 'inline-block';
 
     // ★ 問題画像表示処理
     if (q.question_image) {

@@ -111,6 +111,7 @@ function setupModeButtons() {
         btn.classList.add('active');
         document.getElementById('mode-indicator').textContent = text;
         state.mode = mode;
+        state.currentList = [];   // ★ shuffle再生成用に空にする
         buildCurrentList();
         state.currentIndex = 0;
         saveState();
@@ -177,9 +178,19 @@ function buildCurrentList() {
         ? state.questions.filter(q => state.results[q.question_id] === false)
         : state.questions;
 
-    state.currentList = state.mode === 'shuffle'
-        ? shuffleArray(base)
-        : [...base];
+    if (state.mode === 'shuffle') {
+        // ★ 既存リストを保持（再生成しない）
+        if (!state.currentList.length) {
+            state.currentList = shuffleArray(base);
+        }
+    } else {
+        state.currentList = [...base];
+    }
+
+    // ★ index安全化
+    if (state.currentIndex >= state.currentList.length) {
+        state.currentIndex = 0;
+    }
 }
 
 async function render() {

@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>StudyApp</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -19,6 +20,13 @@
         <input type="password" id="auth-password" placeholder="閲覧パスワード">
         <button id="auth-btn">認証</button>
         <span id="auth-status"></span>
+      </div>
+
+      <div class="dataset-switch">
+        <select id="dataset-select">
+          <option value="enshu2">演習2</option>
+          <option value="enshu3">演習3</option>
+        </select>
       </div>
 
       <!-- モード切替 -->

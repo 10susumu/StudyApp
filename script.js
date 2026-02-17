@@ -1,10 +1,19 @@
 const STORAGE_KEY = 'studyapp_state';
 
 const CONFIG = {
-    Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/questions',
-    E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/explanations',
+    DATASETS: {
+        "enshu2": {
+            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/enshu2/questions',
+            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/enshu2/explanations'
+        },
+        "enshu3": {
+            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/enshu3/questions',
+            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/enshu3/explanations'
+        }
+    },
     IMAGE_API: 'https://study-image-api.s-i-19921029.workers.dev/assets/image/'
 };
+
 
 let appPassword = null;
 
@@ -15,8 +24,10 @@ let state = {
     currentIndex: 0,
     results: {},
     mode: 'normal',
-    lastViewedQuestionId: null
+    lastViewedQuestionId: null,
+    dataset: "enshu2"   // ★追加
 };
+
 
 const dom = {
     qNumber: null,
@@ -39,7 +50,8 @@ function saveState() {
         mode: state.mode,
         results: state.results,
         currentIndex: state.currentIndex,
-        lastViewedQuestionId: state.lastViewedQuestionId ?? null
+        lastViewedQuestionId: state.lastViewedQuestionId ?? null,
+        dataset: state.dataset
     }));
 }
 
@@ -52,6 +64,7 @@ function loadState() {
         state.results = saved.results || {};
         state.currentIndex = saved.currentIndex || 0;
         state.lastViewedQuestionId = saved.lastViewedQuestionId ?? null;
+        state.dataset = saved.dataset || "enshu2";
     } catch { }
 }
 
@@ -67,11 +80,13 @@ function setupAuth() {
         status.textContent = "認証済";
         document.getElementById("auth-area").classList.add('hidden');
 
+        const ds = CONFIG.DATASETS[state.dataset];
+
         const [qRes, eRes] = await Promise.all([
-            fetch(CONFIG.Q_DATA, {
+            fetch(ds.Q_DATA, {
                 headers: { "X-Auth-Password": appPassword }
             }),
-            fetch(CONFIG.E_DATA, {
+            fetch(ds.E_DATA, {
                 headers: { "X-Auth-Password": appPassword }
             })
         ]);
@@ -89,7 +104,15 @@ async function init() {
     setupModeButtons();
     setupNavButtons();
     document.getElementById('reset-score-btn').onclick = resetScore;
+
     loadState();
+
+    // ★ dataset復元をUIへ反映
+    const datasetSelect = document.getElementById('dataset-select');
+    if (datasetSelect) {
+        datasetSelect.value = state.dataset;
+    }
+
     buildCurrentList();
 
     if (state.currentIndex >= state.currentList.length) {
@@ -98,6 +121,35 @@ async function init() {
 
     updateResumeButton();
     await render();
+
+    datasetSelect.onchange = async (e) => {
+        state.dataset = e.target.value;
+        state.currentIndex = 0;
+        state.results = {};
+        state.lastViewedQuestionId = null;
+        saveState();
+
+        if (!appPassword) return;
+
+        const ds = CONFIG.DATASETS[state.dataset];
+
+        const [qRes, eRes] = await Promise.all([
+            fetch(ds.Q_DATA, {
+                headers: { "X-Auth-Password": appPassword }
+            }),
+            fetch(ds.E_DATA, {
+                headers: { "X-Auth-Password": appPassword }
+            })
+        ]);
+
+        state.questions = await qRes.json();
+        state.explanations = await eRes.json();
+
+        buildCurrentList();
+        updateScore();
+        updateResumeButton();
+        await render();
+    };
 }
 
 function setupModeButtons() {

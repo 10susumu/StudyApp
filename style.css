@@ -9,7 +9,8 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: "Segoe UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  /* font-family: "Segoe UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; */
+    font-family: "JetBrains Mono", monospace;
   line-height: 1.5;
   background: #f5f6f8;
   color: #222;
@@ -327,6 +328,31 @@ body {
 }
 
 /* =========================
+   データセット切替
+========================= */
+
+.dataset-switch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#dataset-select {
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  height: 28px;
+}
+
+#dataset-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+/* =========================
    スマホ用（768px以下）
 ========================= */
 
@@ -358,7 +384,8 @@ body {
   /* モード・再開・ナビは折り返し */
   .mode-switch,
   .resume-area,
-  .top-nav {
+  .top-nav,
+  .dataset-switch {
     flex-wrap: wrap;
     gap: 8px;
   }
@@ -422,6 +449,17 @@ body {
     flex-wrap: wrap;
     gap: 8px;
     font-size: 0.9rem;
+  }
+
+    .dataset-switch {
+    width: 100%;
+  }
+
+  #dataset-select {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px 12px;
+    min-height: 44px;
   }
 
 }

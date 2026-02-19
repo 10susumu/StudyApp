@@ -2,6 +2,10 @@ const STORAGE_KEY = 'studyapp_state';
 
 const CONFIG = {
     DATASETS: {
+        "enshu1": {
+            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/enshu1/questions',
+            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/enshu1/explanations'
+        },
         "enshu2": {
             Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/enshu2/questions',
             E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/enshu2/explanations'

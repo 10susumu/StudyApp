@@ -334,18 +334,23 @@ async function render() {
         input.value = c.label;
 
         label.appendChild(input);
-        
+
         const text = ` ${c.label}: ${c.text}`;
         const parts = text.split('\n');
 
+        const textSpan = document.createElement('span');
+        textSpan.className = 'choice-text';
+
         parts.forEach((line, index) => {
-            label.appendChild(document.createTextNode(line));
+            textSpan.appendChild(document.createTextNode(line));
             if (index < parts.length - 1) {
-                label.appendChild(document.createElement('br'));
+                textSpan.appendChild(document.createElement('br'));
             }
         });
 
+        label.appendChild(textSpan);
         dom.choices.appendChild(label);
+        
     });
 
     dom.currentIdx.textContent = state.currentIndex + 1;

@@ -334,11 +334,16 @@ async function render() {
         input.value = c.label;
 
         label.appendChild(input);
+        
+        const text = ` ${c.label}: ${c.text}`;
+        const parts = text.split('\n');
 
-        // ★ ここを textContent に変更
-        label.appendChild(
-            document.createTextNode(` ${c.label}: ${c.text}`)
-        );
+        parts.forEach((line, index) => {
+            label.appendChild(document.createTextNode(line));
+            if (index < parts.length - 1) {
+                label.appendChild(document.createElement('br'));
+            }
+        });
 
         dom.choices.appendChild(label);
     });

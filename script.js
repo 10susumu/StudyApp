@@ -46,7 +46,8 @@ const dom = {
     resumeBtn: document.getElementById('resume-btn'),
     currentIdx: document.getElementById('current-idx'),
     totalIdx: document.getElementById('total-idx'),
-    imageContainer: document.getElementById('image-container')
+    imageContainer: document.getElementById('image-container'),
+    pageSelect: document.getElementById('page-select')
 };
 
 function saveState() {
@@ -110,6 +111,12 @@ async function init() {
     document.getElementById('reset-score-btn').onclick = resetScore;
 
     loadState();
+
+    dom.pageSelect.onchange = async (e) => {
+    state.currentIndex = Number(e.target.value);
+    saveState();
+    await render();
+};
 
     // ★ dataset復元をUIへ反映
     const datasetSelect = document.getElementById('dataset-select');
@@ -219,6 +226,22 @@ function setupNavButtons() {
     });
 }
 
+// ページプルダウン初期化関数追加
+function updatePageSelect() {
+    if (!dom.pageSelect) return;
+
+    dom.pageSelect.innerHTML = '';
+
+    state.currentList.forEach((_, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = index + 1;
+        dom.pageSelect.appendChild(option);
+    });
+
+    dom.pageSelect.value = state.currentIndex;
+}
+
 function shuffleArray(arr) {
     const a = [...arr];
     for (let i = a.length - 1; i > 0; i--) {
@@ -246,6 +269,8 @@ function buildCurrentList() {
     if (state.currentIndex >= state.currentList.length) {
         state.currentIndex = 0;
     }
+
+    updatePageSelect();
 }
 
 async function render() {
@@ -355,6 +380,11 @@ async function render() {
 
     dom.currentIdx.textContent = state.currentIndex + 1;
     dom.totalIdx.textContent = list.length + " ";
+
+    // updatePageSelect();
+    if (dom.pageSelect) {
+        dom.pageSelect.value = state.currentIndex;
+    }
 }
 
 // ========================

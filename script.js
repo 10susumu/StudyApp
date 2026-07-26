@@ -13,6 +13,38 @@ const CONFIG = {
         "enshu3": {
             Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/enshu3/questions',
             E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/enshu3/explanations'
+        },
+        "mogi1": {
+            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/mogi1/questions',
+            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/mogi1/explanations'
+        },
+        "mogi2": {
+            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/mogi2/questions',
+            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/mogi2/explanations'
+        },
+        "renshu1": {
+            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu1/questions',
+            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu1/explanations'
+        },
+        "renshu2": {
+            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu2/questions',
+            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu2/explanations'
+        },
+        "renshu3": {
+            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu3/questions',
+            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu3/explanations'
+        },
+        "renshu4": {
+            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu4/questions',
+            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu4/explanations'
+        },
+        "renshu5": {
+            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu5/questions',
+            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu5/explanations'
+        },
+        "renshu6": {
+            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu6/questions',
+            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu6/explanations'
         }
     },
     IMAGE_API: 'https://study-image-api.s-i-19921029.workers.dev/assets/image/'

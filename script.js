@@ -482,3 +482,40 @@ function resetScore() {
 
 
 init();
+
+async function saveState() {
+    const stateData = {
+        mode: state.mode,
+        results: state.results,
+        currentIndex: state.currentIndex,
+        lastViewedQuestionId: state.lastViewedQuestionId,
+        dataset: state.dataset
+    };
+
+    await fetch("/saveState", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Password": appPassword
+        },
+        body: JSON.stringify(stateData)
+    });
+}
+
+async function loadState() {
+    const res = await fetch("/loadState", {
+        headers: {
+            "X-Auth-Password": appPassword
+        }
+    });
+
+    if (!res.ok) return;
+
+    const saved = await res.json();
+
+    state.mode = saved.mode || "normal";
+    state.results = saved.results || {};
+    state.currentIndex = saved.currentIndex || 0;
+    state.lastViewedQuestionId = saved.lastViewedQuestionId ?? null;
+    state.dataset = saved.dataset || "enshu2";
+}

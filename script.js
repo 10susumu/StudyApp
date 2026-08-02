@@ -58,8 +58,9 @@ let state = {
     explanations: [],
     currentList: [],
     currentIndex: 0,
-    results: {},
+    resultsByDataset: {},
     mode: 'normal',
+    lastViewedQuestionIdByDataset: {},
     lastViewedQuestionId: null,
     dataset: "enshu2"   // ★追加
 };
@@ -102,19 +103,27 @@ function normalizeResult(value) {
     };
 }
 
+function getCurrentResults() {
+    if (!state.resultsByDataset[state.dataset]) {
+        state.resultsByDataset[state.dataset] = {};
+    }
+    return state.resultsByDataset[state.dataset];
+}
+
 function getQuestionStats(questionId) {
-    return normalizeResult(state.results[questionId]);
+    return normalizeResult(getCurrentResults()[questionId]);
 }
 
 function setQuestionResult(questionId, isCorrect) {
-    const prev = getQuestionStats(questionId);
+    const results = getCurrentResults();
+    const prev = normalizeResult(results[questionId]);
     const next = {
         attempts: prev.attempts + 1,
         wrongs: prev.wrongs + (isCorrect ? 0 : 1),
         lastResult: isCorrect
     };
 
-    state.results[questionId] = next;
+    results[questionId] = next;
     return next;
 }
 
@@ -186,8 +195,7 @@ async function init() {
     datasetSelect.onchange = async (e) => {
         state.dataset = e.target.value;
         state.currentIndex = 0;
-        state.results = {};
-        state.lastViewedQuestionId = null;
+        state.lastViewedQuestionId = state.lastViewedQuestionIdByDataset[state.dataset] ?? null;
         await saveRemoteState();
 
         if (!appPassword) return;
@@ -363,6 +371,7 @@ async function render() {
     // ★ 通常モードのみ履歴保存
     if (state.mode === 'normal') {
         state.lastViewedQuestionId = q.question_id;
+        state.lastViewedQuestionIdByDataset[state.dataset] = q.question_id;
         await saveRemoteState();
         updateResumeButton();
     }
@@ -491,7 +500,7 @@ dom.form.onsubmit = async e => {
 // スコア
 // ========================
 function updateScore() {
-    const values = Object.values(state.results).map(normalizeResult);
+    const values = Object.values(getCurrentResults()).map(normalizeResult);
     dom.scoreC.textContent = values.filter(v => v.lastResult === true).length;
     dom.scoreW.textContent = values.filter(v => v.lastResult === false).length;
     dom.scoreP.textContent = state.questions.length
@@ -500,7 +509,7 @@ function updateScore() {
 }
 
 async function resetScore() {
-    state.results = {};
+    state.resultsByDataset[state.dataset] = {};
     await saveRemoteState();
     updateScore();
     buildCurrentList();
@@ -520,8 +529,9 @@ async function saveRemoteState() {
 
     const stateData = {
         mode: state.mode,
-        results: state.results,
+        resultsByDataset: state.resultsByDataset,
         currentIndex: state.currentIndex,
+        lastViewedQuestionIdByDataset: state.lastViewedQuestionIdByDataset,
         lastViewedQuestionId: state.lastViewedQuestionId,
         dataset: state.dataset
     };
@@ -550,8 +560,9 @@ async function loadRemoteState() {
     const saved = await res.json();
 
     state.mode = saved.mode || "normal";
-    state.results = saved.results || {};
+    state.resultsByDataset = saved.resultsByDataset || {};
     state.currentIndex = saved.currentIndex || 0;
-    state.lastViewedQuestionId = saved.lastViewedQuestionId ?? null;
+    state.lastViewedQuestionIdByDataset = saved.lastViewedQuestionIdByDataset || {};
     state.dataset = saved.dataset || "enshu2";
+    state.lastViewedQuestionId = state.lastViewedQuestionIdByDataset[state.dataset] ?? null;
 }

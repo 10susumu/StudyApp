@@ -1,53 +1,53 @@
-const STORAGE_KEY = 'studyapp_state';
+const WORKER_BASE_URL = 'https://study-image-api.s-i-19921029.workers.dev';
 
 const CONFIG = {
     DATASETS: {
         "enshu1": {
-            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/enshu1/questions',
-            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/enshu1/explanations'
+            Q_DATA: `${WORKER_BASE_URL}/data/enshu1/questions`,
+            E_DATA: `${WORKER_BASE_URL}/data/enshu1/explanations`
         },
         "enshu2": {
-            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/enshu2/questions',
-            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/enshu2/explanations'
+            Q_DATA: `${WORKER_BASE_URL}/data/enshu2/questions`,
+            E_DATA: `${WORKER_BASE_URL}/data/enshu2/explanations`
         },
         "enshu3": {
-            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/enshu3/questions',
-            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/enshu3/explanations'
+            Q_DATA: `${WORKER_BASE_URL}/data/enshu3/questions`,
+            E_DATA: `${WORKER_BASE_URL}/data/enshu3/explanations`
         },
         "mogi1": {
-            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/mogi1/questions',
-            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/mogi1/explanations'
+            Q_DATA: `${WORKER_BASE_URL}/data/mogi1/questions`,
+            E_DATA: `${WORKER_BASE_URL}/data/mogi1/explanations`
         },
         "mogi2": {
-            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/mogi2/questions',
-            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/mogi2/explanations'
+            Q_DATA: `${WORKER_BASE_URL}/data/mogi2/questions`,
+            E_DATA: `${WORKER_BASE_URL}/data/mogi2/explanations`
         },
         "renshu1": {
-            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu1/questions',
-            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu1/explanations'
+            Q_DATA: `${WORKER_BASE_URL}/data/renshu1/questions`,
+            E_DATA: `${WORKER_BASE_URL}/data/renshu1/explanations`
         },
         "renshu2": {
-            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu2/questions',
-            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu2/explanations'
+            Q_DATA: `${WORKER_BASE_URL}/data/renshu2/questions`,
+            E_DATA: `${WORKER_BASE_URL}/data/renshu2/explanations`
         },
         "renshu3": {
-            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu3/questions',
-            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu3/explanations'
+            Q_DATA: `${WORKER_BASE_URL}/data/renshu3/questions`,
+            E_DATA: `${WORKER_BASE_URL}/data/renshu3/explanations`
         },
         "renshu4": {
-            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu4/questions',
-            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu4/explanations'
+            Q_DATA: `${WORKER_BASE_URL}/data/renshu4/questions`,
+            E_DATA: `${WORKER_BASE_URL}/data/renshu4/explanations`
         },
         "renshu5": {
-            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu5/questions',
-            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu5/explanations'
+            Q_DATA: `${WORKER_BASE_URL}/data/renshu5/questions`,
+            E_DATA: `${WORKER_BASE_URL}/data/renshu5/explanations`
         },
         "renshu6": {
-            Q_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu6/questions',
-            E_DATA: 'https://study-image-api.s-i-19921029.workers.dev/data/renshu6/explanations'
+            Q_DATA: `${WORKER_BASE_URL}/data/renshu6/questions`,
+            E_DATA: `${WORKER_BASE_URL}/data/renshu6/explanations`
         }
     },
-    IMAGE_API: 'https://study-image-api.s-i-19921029.workers.dev/assets/image/'
+    IMAGE_API: `${WORKER_BASE_URL}/assets/image/`
 };
 
 
@@ -82,27 +82,40 @@ const dom = {
     pageSelect: document.getElementById('page-select')
 };
 
-function saveState() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({
-        mode: state.mode,
-        results: state.results,
-        currentIndex: state.currentIndex,
-        lastViewedQuestionId: state.lastViewedQuestionId ?? null,
-        dataset: state.dataset
-    }));
+function normalizeResult(value) {
+    if (value == null) {
+        return { attempts: 0, wrongs: 0, lastResult: null };
+    }
+
+    if (typeof value === 'boolean') {
+        return {
+            attempts: 1,
+            wrongs: value ? 0 : 1,
+            lastResult: value
+        };
+    }
+
+    return {
+        attempts: Number(value.attempts) || 0,
+        wrongs: Number(value.wrongs) || 0,
+        lastResult: typeof value.lastResult === 'boolean' ? value.lastResult : null
+    };
 }
 
-function loadState() {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return;
-    try {
-        const saved = JSON.parse(raw);
-        state.mode = saved.mode || 'normal';
-        state.results = saved.results || {};
-        state.currentIndex = saved.currentIndex || 0;
-        state.lastViewedQuestionId = saved.lastViewedQuestionId ?? null;
-        state.dataset = saved.dataset || "enshu2";
-    } catch { }
+function getQuestionStats(questionId) {
+    return normalizeResult(state.results[questionId]);
+}
+
+function setQuestionResult(questionId, isCorrect) {
+    const prev = getQuestionStats(questionId);
+    const next = {
+        attempts: prev.attempts + 1,
+        wrongs: prev.wrongs + (isCorrect ? 0 : 1),
+        lastResult: isCorrect
+    };
+
+    state.results[questionId] = next;
+    return next;
 }
 
 function setupAuth() {
@@ -116,6 +129,12 @@ function setupAuth() {
         appPassword = pass;
         status.textContent = "認証済";
         document.getElementById("auth-area").classList.add('hidden');
+
+        await loadRemoteState();
+        const datasetSelect = document.getElementById('dataset-select');
+        if (datasetSelect) {
+            datasetSelect.value = state.dataset;
+        }
 
         const ds = CONFIG.DATASETS[state.dataset];
 
@@ -132,6 +151,7 @@ function setupAuth() {
         state.explanations = await eRes.json();
 
         buildCurrentList();
+        updateScore();
         await render();
     };
 }
@@ -142,13 +162,11 @@ async function init() {
     setupNavButtons();
     document.getElementById('reset-score-btn').onclick = resetScore;
 
-    loadState();
-
     dom.pageSelect.onchange = async (e) => {
-    state.currentIndex = Number(e.target.value);
-    saveState();
-    await render();
-};
+        state.currentIndex = Number(e.target.value);
+        await saveRemoteState();
+        await render();
+    };
 
     // ★ dataset復元をUIへ反映
     const datasetSelect = document.getElementById('dataset-select');
@@ -170,7 +188,7 @@ async function init() {
         state.currentIndex = 0;
         state.results = {};
         state.lastViewedQuestionId = null;
-        saveState();
+        await saveRemoteState();
 
         if (!appPassword) return;
 
@@ -198,6 +216,7 @@ async function init() {
 function setupModeButtons() {
     const nm = document.getElementById('normal-mode-btn');
     const wm = document.getElementById('wrong-only-btn');
+    const hm = document.getElementById('hard-mode-btn');
     const sm = document.getElementById('shuffle-mode-btn');
 
     async function activate(btn, text, mode) {
@@ -208,13 +227,14 @@ function setupModeButtons() {
         state.currentList = [];   // ★ shuffle再生成用に空にする
         buildCurrentList();
         state.currentIndex = 0;
-        saveState();
+        await saveRemoteState();
         updateResumeButton();
         await render();
     }
 
     nm.onclick = () => activate(nm, '現在のモード：通常', 'normal');
     wm.onclick = () => activate(wm, '現在のモード：不正解のみ', 'wrong');
+    hm.onclick = () => activate(hm, '現在のモード：苦手問題', 'hard');
     sm.onclick = () => activate(sm, '現在のモード：ランダム', 'shuffle');
 
     // ★ 前回から再開
@@ -241,7 +261,7 @@ function setupNavButtons() {
         document.getElementById(id).onclick = async () => {
             if (state.currentIndex > 0) {
                 state.currentIndex--;
-                saveState();
+                await saveRemoteState();
                 await render();
             }
         };
@@ -251,7 +271,7 @@ function setupNavButtons() {
         document.getElementById(id).onclick = async () => {
             if (state.currentIndex < state.currentList.length - 1) {
                 state.currentIndex++;
-                saveState();
+                await saveRemoteState();
                 await render();
             }
         };
@@ -284,12 +304,25 @@ function shuffleArray(arr) {
 }
 
 function buildCurrentList() {
-    let base = state.mode === 'wrong'
-        ? state.questions.filter(q => state.results[q.question_id] === false)
-        : state.questions;
+    let base = state.questions;
+
+    if (state.mode === 'wrong') {
+        base = state.questions.filter(q => getQuestionStats(q.question_id).lastResult === false);
+    } else if (state.mode === 'hard') {
+        base = state.questions
+            .map(q => ({ question: q, stats: getQuestionStats(q.question_id) }))
+            .filter(item => item.stats.wrongs > 0)
+            .sort((a, b) => {
+                const ratioA = a.stats.attempts ? a.stats.wrongs / a.stats.attempts : 0;
+                const ratioB = b.stats.attempts ? b.stats.wrongs / b.stats.attempts : 0;
+                if (ratioB !== ratioA) return ratioB - ratioA;
+                if (b.stats.wrongs !== a.stats.wrongs) return b.stats.wrongs - a.stats.wrongs;
+                return b.stats.attempts - a.stats.attempts;
+            })
+            .map(item => item.question);
+    }
 
     if (state.mode === 'shuffle') {
-        // ★ 既存リストを保持（再生成しない）
         if (!state.currentList.length) {
             state.currentList = shuffleArray(base);
         }
@@ -297,7 +330,6 @@ function buildCurrentList() {
         state.currentList = [...base];
     }
 
-    // ★ index安全化
     if (state.currentIndex >= state.currentList.length) {
         state.currentIndex = 0;
     }
@@ -331,7 +363,7 @@ async function render() {
     // ★ 通常モードのみ履歴保存
     if (state.mode === 'normal') {
         state.lastViewedQuestionId = q.question_id;
-        saveState();
+        await saveRemoteState();
         updateResumeButton();
     }
 
@@ -422,7 +454,7 @@ async function render() {
 // ========================
 // 回答処理
 // ========================
-dom.form.onsubmit = e => {
+dom.form.onsubmit = async e => {
     e.preventDefault();
 
     const selected = Array.from(new FormData(dom.form).getAll('ans'));
@@ -436,8 +468,8 @@ dom.form.onsubmit = e => {
     const correct = ex.correct_answers.sort();
     const isCorrect = JSON.stringify(selected.sort()) === JSON.stringify(correct);
 
-    state.results[q.question_id] = isCorrect;
-    saveState();   // ★追加
+    setQuestionResult(q.question_id, isCorrect);
+    await saveRemoteState();
 
     document.querySelectorAll('.choice-item').forEach(l => {
         const v = l.querySelector('input').value;
@@ -459,17 +491,17 @@ dom.form.onsubmit = e => {
 // スコア
 // ========================
 function updateScore() {
-    const v = Object.values(state.results);
-    dom.scoreC.textContent = v.filter(x => x).length;
-    dom.scoreW.textContent = v.filter(x => !x).length;
+    const values = Object.values(state.results).map(normalizeResult);
+    dom.scoreC.textContent = values.filter(v => v.lastResult === true).length;
+    dom.scoreW.textContent = values.filter(v => v.lastResult === false).length;
     dom.scoreP.textContent = state.questions.length
-        ? Math.round((v.filter(x => x).length / state.questions.length) * 100)
+        ? Math.round((values.filter(v => v.lastResult === true).length / state.questions.length) * 100)
         : 0;
 }
 
-function resetScore() {
+async function resetScore() {
     state.results = {};
-    saveState();
+    await saveRemoteState();
     updateScore();
     buildCurrentList();
 
@@ -477,13 +509,15 @@ function resetScore() {
         state.currentIndex = 0;
     }
 
-    render();
+    await render();
 }
 
 
 init();
 
-async function saveState() {
+async function saveRemoteState() {
+    if (!appPassword) return;
+
     const stateData = {
         mode: state.mode,
         results: state.results,
@@ -492,7 +526,7 @@ async function saveState() {
         dataset: state.dataset
     };
 
-    await fetch("/saveState", {
+    await fetch(`${WORKER_BASE_URL}/saveState`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -502,8 +536,10 @@ async function saveState() {
     });
 }
 
-async function loadState() {
-    const res = await fetch("/loadState", {
+async function loadRemoteState() {
+    if (!appPassword) return;
+
+    const res = await fetch(`${WORKER_BASE_URL}/loadState`, {
         headers: {
             "X-Auth-Password": appPassword
         }

@@ -433,7 +433,7 @@ async function render() {
 
         label.appendChild(input);
 
-        const text = ` ${c.label}: ${c.text}`;
+        const text = `${c.label}: ${c.text}`;
         const parts = text.split('\n');
 
         const textSpan = document.createElement('span');

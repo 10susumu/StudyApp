@@ -440,6 +440,9 @@ async function render() {
         textSpan.className = 'choice-text';
 
         parts.forEach((line, index) => {
+            if (index > 0) {
+                textSpan.appendChild(document.createTextNode('\u0020\u0020\u0020'));
+            }
             textSpan.appendChild(document.createTextNode(line));
             if (index < parts.length - 1) {
                 textSpan.appendChild(document.createElement('br'));

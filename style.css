@@ -169,6 +169,7 @@ body {
 
 .choice-text {
   flex: 1;
+  white-space: pre-wrap;
 }
 
 /* バリデーションメッセージ */

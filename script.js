@@ -76,7 +76,6 @@ const dom = {
     scoreC: document.getElementById('correct-count'),
     scoreW: document.getElementById('wrong-count'),
     scoreP: document.getElementById('score-percent'),
-    resumeBtn: document.getElementById('resume-btn'),
     currentIdx: document.getElementById('current-idx'),
     totalIdx: document.getElementById('total-idx'),
     imageContainer: document.getElementById('image-container'),
@@ -160,6 +159,16 @@ function setupAuth() {
         state.explanations = await eRes.json();
 
         buildCurrentList();
+        const lastViewedQuestionId = state.lastViewedQuestionIdByDataset[state.dataset];
+        state.lastViewedQuestionId = lastViewedQuestionId ?? null;
+        if (state.mode === 'normal' && lastViewedQuestionId != null) {
+            const lastViewedIndex = state.currentList.findIndex(
+                q => q.question_id === lastViewedQuestionId
+            );
+            if (lastViewedIndex !== -1) {
+                state.currentIndex = lastViewedIndex;
+            }
+        }
         updateScore();
         await render();
     };
@@ -189,13 +198,11 @@ async function init() {
         state.currentIndex = 0;
     }
 
-    updateResumeButton();
     await render();
 
     datasetSelect.onchange = async (e) => {
         state.dataset = e.target.value;
         state.currentIndex = 0;
-        state.lastViewedQuestionId = state.lastViewedQuestionIdByDataset[state.dataset] ?? null;
         await saveRemoteState();
 
         if (!appPassword) return;
@@ -216,7 +223,6 @@ async function init() {
 
         buildCurrentList();
         updateScore();
-        updateResumeButton();
         await render();
     };
 }
@@ -227,41 +233,21 @@ function setupModeButtons() {
     const hm = document.getElementById('hard-mode-btn');
     const sm = document.getElementById('shuffle-mode-btn');
 
-    async function activate(btn, text, mode) {
+    async function activate(btn, mode) {
         document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        document.getElementById('mode-indicator').textContent = text;
         state.mode = mode;
         state.currentList = [];   // ★ shuffle再生成用に空にする
         buildCurrentList();
         state.currentIndex = 0;
         await saveRemoteState();
-        updateResumeButton();
         await render();
     }
 
-    nm.onclick = () => activate(nm, '現在のモード：通常', 'normal');
-    wm.onclick = () => activate(wm, '現在のモード：不正解のみ', 'wrong');
-    hm.onclick = () => activate(hm, '現在のモード：苦手問題', 'hard');
-    sm.onclick = () => activate(sm, '現在のモード：ランダム', 'shuffle');
-
-    // ★ 前回から再開
-    dom.resumeBtn.onclick = async () => {
-        if (!state.lastViewedQuestionId) return;
-        state.mode = 'normal';
-        buildCurrentList();
-        const idx = state.currentList.findIndex(
-            q => q.question_id === state.lastViewedQuestionId
-        );
-        if (idx !== -1) {
-            state.currentIndex = idx;
-            await render();
-        }
-    };
-}
-
-function updateResumeButton() {
-    dom.resumeBtn.disabled = state.lastViewedQuestionId == null;
+    nm.onclick = () => activate(nm, 'normal');
+    wm.onclick = () => activate(wm, 'wrong');
+    hm.onclick = () => activate(hm, 'hard');
+    sm.onclick = () => activate(sm, 'shuffle');
 }
 
 function setupNavButtons() {
@@ -368,12 +354,11 @@ async function render() {
 
     const q = list[state.currentIndex];
 
-    // ★ 通常モードのみ履歴保存
+    // Save the current position while in normal mode.
     if (state.mode === 'normal') {
         state.lastViewedQuestionId = q.question_id;
         state.lastViewedQuestionIdByDataset[state.dataset] = q.question_id;
         await saveRemoteState();
-        updateResumeButton();
     }
 
     dom.qNumber.style.display = 'inline';
@@ -567,5 +552,6 @@ async function loadRemoteState() {
     state.currentIndex = saved.currentIndex || 0;
     state.lastViewedQuestionIdByDataset = saved.lastViewedQuestionIdByDataset || {};
     state.dataset = saved.dataset || "enshu2";
-    state.lastViewedQuestionId = state.lastViewedQuestionIdByDataset[state.dataset] ?? null;
+    state.lastViewedQuestionId =
+        saved.lastViewedQuestionId ?? state.lastViewedQuestionIdByDataset[state.dataset] ?? null;
 }

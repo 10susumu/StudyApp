@@ -45,7 +45,6 @@ body {
 
 /* 各ブロック横並び */
 .mode-switch,
-.resume-area,
 .top-nav {
   display: flex;
   align-items: center;
@@ -53,13 +52,6 @@ body {
   margin-bottom: 0;
   /* 縦余白を消す */
 }
-
-/* モード表示も縦余白削除 */
-.mode-indicator {
-  margin-bottom: 0;
-  white-space: nowrap;
-}
-
 
 /* =========================
    モード切替
@@ -85,12 +77,6 @@ body {
   background: #3b82f6;
   color: #fff;
   border-color: #3b82f6;
-}
-
-.mode-indicator {
-  font-size: 0.8rem;
-  color: #555;
-  margin-bottom: 6px;
 }
 
 /* =========================
@@ -326,16 +312,6 @@ body {
   margin-bottom: 6px;
 }
 
-/* 前回から再開ボタン配置 */
-.resume-area {
-  margin-bottom: 6px;
-}
-
-.resume-area .mode-btn:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
 /* =========================
    データセット切替
 ========================= */
@@ -390,9 +366,8 @@ body {
     font-size: 1.3rem;
   }
 
-  /* モード・再開・ナビは折り返し */
+  /* モード・ナビは折り返し */
   .mode-switch,
-  .resume-area,
   .top-nav,
   .dataset-switch {
     flex-wrap: wrap;

@@ -251,24 +251,41 @@ function setupModeButtons() {
 }
 
 function setupNavButtons() {
+    async function navigate(offset) {
+        const nextIndex = state.currentIndex + offset;
+        if (nextIndex < 0 || nextIndex >= state.currentList.length) {
+            return;
+        }
+
+        state.currentIndex = nextIndex;
+        await saveRemoteState();
+        await render();
+    }
+
     ['prev-btn', 'prev-btn-top'].forEach(id => {
-        document.getElementById(id).onclick = async () => {
-            if (state.currentIndex > 0) {
-                state.currentIndex--;
-                await saveRemoteState();
-                await render();
-            }
-        };
+        document.getElementById(id).onclick = () => navigate(-1);
     });
 
     ['next-btn', 'next-btn-top'].forEach(id => {
-        document.getElementById(id).onclick = async () => {
-            if (state.currentIndex < state.currentList.length - 1) {
-                state.currentIndex++;
-                await saveRemoteState();
-                await render();
-            }
-        };
+        document.getElementById(id).onclick = () => navigate(1);
+    });
+
+    document.addEventListener('keydown', event => {
+        if (event.repeat || event.altKey || event.ctrlKey || event.metaKey) {
+            return;
+        }
+
+        if (event.target instanceof Element &&
+            event.target.closest('input, textarea, select, [contenteditable="true"]')) {
+            return;
+        }
+
+        const key = event.key.toLowerCase();
+        if (key === 'j') {
+            navigate(-1);
+        } else if (key === 'l') {
+            navigate(1);
+        }
     });
 }
 

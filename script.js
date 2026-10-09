@@ -53,11 +53,20 @@ const CONFIG = {
 
 let appPassword = null;
 const SAVE_DEBOUNCE_MS = 1000;
+const SAVE_MAX_WAIT_MS = 60 * 1000;
+const SAVE_RETRY_DELAY_MS = 5000;
+const SAVE_MIN_INTERVAL_MS = 90 * 1000;
+const KEEPALIVE_BODY_LIMIT_BYTES = 60 * 1024;
 let saveRemoteStateTimer = null;
+let saveRemoteStateMaxTimer = null;
 let saveRemoteStatePending = false;
 let saveRemoteStateInProgress = false;
-let saveRemoteStateKeepalivePending = false;
 let lastSavedRemoteState = null;
+let lastRemoteStateSaveAt = null;
+let activeSaveRemoteStateBody = null;
+let activeSaveRemoteStateKeepalive = false;
+let activeSaveRemoteStateController = null;
+let activeSaveRemoteStateId = 0;
 
 let state = {
     questions: [],
@@ -551,31 +560,100 @@ function saveRemoteState() {
 
     saveRemoteStatePending = true;
     clearTimeout(saveRemoteStateTimer);
+    if (saveRemoteStateMaxTimer === null) {
+        saveRemoteStateMaxTimer = setTimeout(() => {
+            saveRemoteStateMaxTimer = null;
+            flushRemoteState();
+        }, SAVE_MAX_WAIT_MS);
+    }
     saveRemoteStateTimer = setTimeout(() => {
         saveRemoteStateTimer = null;
         flushRemoteState();
     }, SAVE_DEBOUNCE_MS);
 }
 
-function flushRemoteState(keepalive = false) {
-    if (!appPassword || !saveRemoteStatePending) return;
+function flushRemoteState(keepalive = false, bypassMinInterval = false) {
+    if (!appPassword) return;
 
     clearTimeout(saveRemoteStateTimer);
     saveRemoteStateTimer = null;
-    if (saveRemoteStateInProgress) {
-        saveRemoteStateKeepalivePending = saveRemoteStateKeepalivePending || keepalive;
+
+    const body = JSON.stringify(getRemoteStateSnapshot());
+    if (keepalive) {
+        const bodySize = new TextEncoder().encode(body).byteLength;
+        if (bodySize > KEEPALIVE_BODY_LIMIT_BYTES) {
+            console.error(
+                `Remote state (${bodySize} bytes) exceeds the keepalive request limit; trying a regular save.`
+            );
+            saveRemoteStatePending = true;
+            if (saveRemoteStateInProgress && activeSaveRemoteStateBody !== body) {
+                activeSaveRemoteStateController?.abort();
+                activeSaveRemoteStateId++;
+                saveRemoteStateInProgress = false;
+                activeSaveRemoteStateController = null;
+            }
+            flushRemoteState(false, true);
+            return;
+        }
+
+        if (saveRemoteStateInProgress &&
+            activeSaveRemoteStateKeepalive &&
+            activeSaveRemoteStateBody === body) {
+            saveRemoteStatePending = false;
+            clearTimeout(saveRemoteStateMaxTimer);
+            saveRemoteStateMaxTimer = null;
+            return;
+        }
+
+        if (body === lastSavedRemoteState &&
+            (!saveRemoteStateInProgress || activeSaveRemoteStateBody === body)) {
+            saveRemoteStatePending = false;
+            clearTimeout(saveRemoteStateMaxTimer);
+            saveRemoteStateMaxTimer = null;
+            return;
+        }
+
+        if (saveRemoteStateInProgress) {
+            activeSaveRemoteStateController?.abort();
+            activeSaveRemoteStateId++;
+            saveRemoteStateInProgress = false;
+            activeSaveRemoteStateController = null;
+            saveRemoteStatePending = true;
+        }
+    } else if (!saveRemoteStatePending) {
         return;
     }
 
-    const body = JSON.stringify(getRemoteStateSnapshot());
-    saveRemoteStatePending = false;
+    if (!keepalive && !bypassMinInterval && lastRemoteStateSaveAt !== null) {
+        const waitMs = SAVE_MIN_INTERVAL_MS - (Date.now() - lastRemoteStateSaveAt);
+        if (waitMs > 0) {
+            saveRemoteStateTimer = setTimeout(() => {
+                saveRemoteStateTimer = null;
+                flushRemoteState();
+            }, waitMs);
+            return;
+        }
+    }
+
+    if (saveRemoteStateInProgress) {
+        return;
+    }
+
     if (body === lastSavedRemoteState) {
-        saveRemoteStateKeepalivePending = false;
+        saveRemoteStatePending = false;
+        clearTimeout(saveRemoteStateMaxTimer);
+        saveRemoteStateMaxTimer = null;
         return;
     }
 
     const password = appPassword;
+    const requestId = ++activeSaveRemoteStateId;
+    const controller = new AbortController();
+    saveRemoteStatePending = false;
     saveRemoteStateInProgress = true;
+    activeSaveRemoteStateBody = body;
+    activeSaveRemoteStateKeepalive = keepalive;
+    activeSaveRemoteStateController = controller;
     fetch(`${WORKER_BASE_URL}/saveState`, {
         method: "POST",
         headers: {
@@ -583,33 +661,73 @@ function flushRemoteState(keepalive = false) {
             "X-Auth-Password": password
         },
         body,
-        keepalive
+        keepalive,
+        signal: controller.signal
     })
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Save state request failed: ${response.status}`);
             }
-            lastSavedRemoteState = body;
+            if (requestId === activeSaveRemoteStateId) {
+                lastSavedRemoteState = body;
+                lastRemoteStateSaveAt = Date.now();
+            }
         })
         .catch(error => {
-            console.error("Failed to save remote state:", error);
+            if (requestId === activeSaveRemoteStateId) {
+                console.error("Failed to save remote state:", error);
+                saveRemoteStatePending = true;
+            }
         })
         .finally(() => {
+            if (requestId !== activeSaveRemoteStateId) return;
+
             saveRemoteStateInProgress = false;
-            if (saveRemoteStatePending && saveRemoteStateTimer === null) {
-                const shouldKeepalive = saveRemoteStateKeepalivePending;
-                saveRemoteStateKeepalivePending = false;
-                flushRemoteState(shouldKeepalive);
+            activeSaveRemoteStateBody = null;
+            activeSaveRemoteStateKeepalive = false;
+            activeSaveRemoteStateController = null;
+
+            if (JSON.stringify(getRemoteStateSnapshot()) !== lastSavedRemoteState) {
+                saveRemoteStatePending = true;
+            }
+
+            if (!saveRemoteStatePending) {
+                clearTimeout(saveRemoteStateMaxTimer);
+                saveRemoteStateMaxTimer = null;
+            } else if (saveRemoteStateTimer === null) {
+                if (lastSavedRemoteState === body) {
+                    flushRemoteState();
+                } else {
+                    saveRemoteStateTimer = setTimeout(() => {
+                        saveRemoteStateTimer = null;
+                        flushRemoteState();
+                    }, SAVE_RETRY_DELAY_MS);
+                }
             }
         });
 }
 
-window.addEventListener('pagehide', () => {
-    if (!saveRemoteStatePending) return;
+function flushRemoteStateOnHide(keepalive) {
+    if (!appPassword) return;
+
+    const currentBody = JSON.stringify(getRemoteStateSnapshot());
+    const activeRequestIsStale =
+        saveRemoteStateInProgress && activeSaveRemoteStateBody !== currentBody;
+    if (currentBody !== lastSavedRemoteState || activeRequestIsStale) {
+        saveRemoteStatePending = true;
+    }
+    if (!saveRemoteStatePending && !saveRemoteStateInProgress) return;
 
     clearTimeout(saveRemoteStateTimer);
     saveRemoteStateTimer = null;
-    flushRemoteState(true);
+    flushRemoteState(keepalive);
+}
+
+window.addEventListener('pagehide', () => flushRemoteStateOnHide(true));
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+        flushRemoteStateOnHide(false);
+    }
 });
 
 async function loadRemoteState() {
@@ -635,4 +753,5 @@ async function loadRemoteState() {
     state.lastViewedQuestionId =
         saved.lastViewedQuestionId ?? state.lastViewedQuestionIdByDataset[state.dataset] ?? null;
     lastSavedRemoteState = JSON.stringify(getRemoteStateSnapshot());
+    lastRemoteStateSaveAt = Date.now();
 }

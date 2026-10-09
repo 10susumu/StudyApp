@@ -52,6 +52,12 @@ const CONFIG = {
 
 
 let appPassword = null;
+const SAVE_DEBOUNCE_MS = 1000;
+let saveRemoteStateTimer = null;
+let saveRemoteStatePending = false;
+let saveRemoteStateInProgress = false;
+let saveRemoteStateKeepalivePending = false;
+let lastSavedRemoteState = null;
 
 let state = {
     questions: [],
@@ -182,7 +188,7 @@ async function init() {
 
     dom.pageSelect.onchange = async (e) => {
         state.currentIndex = Number(e.target.value);
-        await saveRemoteState();
+        saveRemoteState();
         await render();
     };
 
@@ -203,7 +209,7 @@ async function init() {
     datasetSelect.onchange = async (e) => {
         state.dataset = e.target.value;
         state.currentIndex = 0;
-        await saveRemoteState();
+        saveRemoteState();
 
         if (!appPassword) return;
 
@@ -240,7 +246,7 @@ function setupModeButtons() {
         state.currentList = [];   // ★ shuffle再生成用に空にする
         buildCurrentList();
         state.currentIndex = 0;
-        await saveRemoteState();
+        saveRemoteState();
         await render();
     }
 
@@ -258,7 +264,7 @@ function setupNavButtons() {
         }
 
         state.currentIndex = nextIndex;
-        await saveRemoteState();
+        saveRemoteState();
         await render();
     }
 
@@ -375,7 +381,7 @@ async function render() {
     if (state.mode === 'normal') {
         state.lastViewedQuestionId = q.question_id;
         state.lastViewedQuestionIdByDataset[state.dataset] = q.question_id;
-        await saveRemoteState();
+        saveRemoteState();
     }
 
     dom.qNumber.style.display = 'inline';
@@ -483,7 +489,7 @@ dom.form.onsubmit = async e => {
     const isCorrect = JSON.stringify(selected.sort()) === JSON.stringify(correct);
 
     setQuestionResult(q.question_id, isCorrect);
-    await saveRemoteState();
+    saveRemoteState();
 
     document.querySelectorAll('.choice-item').forEach(l => {
         const v = l.querySelector('input').value;
@@ -515,7 +521,7 @@ function updateScore() {
 
 async function resetScore() {
     state.resultsByDataset[state.dataset] = {};
-    await saveRemoteState();
+    saveRemoteState();
     updateScore();
     buildCurrentList();
 
@@ -529,10 +535,8 @@ async function resetScore() {
 
 init();
 
-async function saveRemoteState() {
-    if (!appPassword) return;
-
-    const stateData = {
+function getRemoteStateSnapshot() {
+    return {
         mode: state.mode,
         resultsByDataset: state.resultsByDataset,
         currentIndex: state.currentIndex,
@@ -540,19 +544,78 @@ async function saveRemoteState() {
         lastViewedQuestionId: state.lastViewedQuestionId,
         dataset: state.dataset
     };
+}
 
-    await fetch(`${WORKER_BASE_URL}/saveState`, {
+function saveRemoteState() {
+    if (!appPassword) return;
+
+    saveRemoteStatePending = true;
+    clearTimeout(saveRemoteStateTimer);
+    saveRemoteStateTimer = setTimeout(() => {
+        saveRemoteStateTimer = null;
+        flushRemoteState();
+    }, SAVE_DEBOUNCE_MS);
+}
+
+function flushRemoteState(keepalive = false) {
+    if (!appPassword || !saveRemoteStatePending) return;
+
+    clearTimeout(saveRemoteStateTimer);
+    saveRemoteStateTimer = null;
+    if (saveRemoteStateInProgress) {
+        saveRemoteStateKeepalivePending = saveRemoteStateKeepalivePending || keepalive;
+        return;
+    }
+
+    const body = JSON.stringify(getRemoteStateSnapshot());
+    saveRemoteStatePending = false;
+    if (body === lastSavedRemoteState) {
+        saveRemoteStateKeepalivePending = false;
+        return;
+    }
+
+    const password = appPassword;
+    saveRemoteStateInProgress = true;
+    fetch(`${WORKER_BASE_URL}/saveState`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "X-Auth-Password": appPassword
+            "X-Auth-Password": password
         },
-        body: JSON.stringify(stateData)
-    });
+        body,
+        keepalive
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Save state request failed: ${response.status}`);
+            }
+            lastSavedRemoteState = body;
+        })
+        .catch(error => {
+            console.error("Failed to save remote state:", error);
+        })
+        .finally(() => {
+            saveRemoteStateInProgress = false;
+            if (saveRemoteStatePending && saveRemoteStateTimer === null) {
+                const shouldKeepalive = saveRemoteStateKeepalivePending;
+                saveRemoteStateKeepalivePending = false;
+                flushRemoteState(shouldKeepalive);
+            }
+        });
 }
+
+window.addEventListener('pagehide', () => {
+    if (!saveRemoteStatePending) return;
+
+    clearTimeout(saveRemoteStateTimer);
+    saveRemoteStateTimer = null;
+    flushRemoteState(true);
+});
 
 async function loadRemoteState() {
     if (!appPassword) return;
+
+    lastSavedRemoteState = null;
 
     const res = await fetch(`${WORKER_BASE_URL}/loadState`, {
         headers: {
@@ -571,4 +634,5 @@ async function loadRemoteState() {
     state.dataset = saved.dataset || "enshu2";
     state.lastViewedQuestionId =
         saved.lastViewedQuestionId ?? state.lastViewedQuestionIdByDataset[state.dataset] ?? null;
+    lastSavedRemoteState = JSON.stringify(getRemoteStateSnapshot());
 }

@@ -1,0 +1,8 @@
+{
+  "chat.tools.terminal.autoApprove": {
+    "/^gh api repos/10susumu/StudyAppData/git/trees/HEAD\\?recursive=1 --jq '\\.tree\\[\\]\\.path'; gh api repos/10susumu/EnvKeySender/git/trees/HEAD\\?recursive=1 --jq '\\.tree\\[\\]\\.path'$/": {
+      "approve": true,
+      "matchCommandLine": true
+    }
+  }
+}
